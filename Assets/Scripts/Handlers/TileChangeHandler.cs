@@ -76,7 +76,6 @@ public class TileChangeHandler : MonoBehaviour {
         List<Vector3> neighbourPositions = new List<Vector3>();
         
         Vector3Int centerCell = _grid.WorldToCell(position);
-        Debug.Log(centerCell);
 
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
@@ -91,7 +90,7 @@ public class TileChangeHandler : MonoBehaviour {
                 }
             }
         }
-        Debug.Log("Neighbours count: " + neighbourPositions.Count);
+        //Debug.Log("Neighbours count: " + neighbourPositions.Count);
         return neighbourPositions.ToArray();
     }
 
@@ -106,10 +105,10 @@ public class TileChangeHandler : MonoBehaviour {
                 correctType.Add(pos);
             }
         }
-        Debug.Log("Neighbours of type " + typeIndex + " found " + correctType.Count);
+        //Debug.Log("Neighbours of type " + typeIndex + " found " + correctType.Count);
 
         if (correctType.Count == 0) {
-            return new Vector3(-1000,-1000,-1000);
+            return new Vector3(-1000f,-1000f,-1000f);
         }
         
         Vector3 randPos = correctType[Random.Range(0,correctType.Count-1)];
@@ -118,7 +117,6 @@ public class TileChangeHandler : MonoBehaviour {
     }
 
     public void ChangeTileAtPosition(Vector3 position, string newTileIndex) {
-        Debug.Log("changing tile");
         BaseTile oldTile = GetGenericTileAtPosition(position);
         GameObject prefab = GetTilePrefab(newTileIndex);
 

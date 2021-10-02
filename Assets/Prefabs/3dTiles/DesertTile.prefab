@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5257072711960731727}
-  - component: {fileID: 5864318538293628713}
   - component: {fileID: 6210692981888714058}
+  - component: {fileID: -3589031004677666580}
   m_Layer: 6
   m_Name: DesertTile
   m_TagString: Untagged
@@ -33,21 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5864318538293628713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2718078374815475557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7bbc11292653f6479791fee63d7c3f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indexName: desert
-  isDisaster: 0
-  generatedWeight: 2
 --- !u!135 &6210692981888714058
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -61,6 +46,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3589031004677666580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2718078374815475557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fee97e9a66d44559148976c04151563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indexName: desert
+  isDisaster: 0
+  generatedWeight: 2
 --- !u!1001 &1380522554586796393
 PrefabInstance:
   m_ObjectHideFlags: 0

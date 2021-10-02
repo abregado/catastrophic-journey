@@ -53,8 +53,6 @@ public class TurnHandler: MonoBehaviour {
         for (int i = _turnEvents.Count-1; i >= 0 ; i--) {
             if (_turnEvents[i] != null && _turnEvents[i].turn <= _turnCount) {
                 TurnEvent te = _turnEvents[i];
-                Debug.Log(te.position);
-                Debug.Log(te.newTileIndex);
                 _changeHandler.ChangeTileAtPosition(te.position, te.newTileIndex);
                 _turnEvents.RemoveAt(i);
             }
@@ -63,9 +61,23 @@ public class TurnHandler: MonoBehaviour {
     }
 
     public void AddEvent(int wait, Vector3 position,string newTileIndex) {
-        _turnEvents.Add(new TurnEvent(_turnCount+wait,position,newTileIndex));
+        if (TileAlreadyHasSoonerEvent(position, wait + _turnCount)) {
+            Debug.Log("already has earlier event for change: " + newTileIndex);
+            return;
+        }
+        _turnEvents.Add(new TurnEvent(_turnCount + wait,position,newTileIndex));
         List<TurnEvent> sortedList = _turnEvents.OrderBy(o => o.turn).ToList();
         _turnEvents = sortedList;
+    }
+
+    private bool TileAlreadyHasSoonerEvent(Vector3 position, int turn) {
+        foreach (TurnEvent te in _turnEvents) {
+            if (position == te.position && te.turn >= turn) {
+                return true;
+            }
+        }
+
+        return false;
     }
     
 }
