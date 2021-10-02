@@ -1,3 +1,3 @@
-public class GrassTile : BaseTile, IMapTile {
+public class GrassTile : BaseTile {
     
 }

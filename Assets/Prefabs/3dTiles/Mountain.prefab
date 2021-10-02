@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5257072711960731727}
-  - component: {fileID: 5864318538293628713}
-  - component: {fileID: 6210692981888714058}
+  - component: {fileID: 2551283080391509623}
+  - component: {fileID: 6167417415829909979}
   m_Layer: 6
-  m_Name: DesertTile
+  m_Name: Mountain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,11 +29,11 @@ Transform:
   m_LocalPosition: {x: 0.527, y: 0, z: -0.221}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1486786627823138434}
+  - {fileID: 427891790243975239}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5864318538293628713
+--- !u!114 &2551283080391509623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,11 +42,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2718078374815475557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7bbc11292653f6479791fee63d7c3f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 4647247848dea61448c3bf4fbd77c639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indexName: desert
---- !u!135 &6210692981888714058
+  indexName: mountain
+--- !u!135 &6167417415829909979
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,69 +59,65 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1001 &1380522554586796393
+--- !u!1001 &178618058669111212
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 5257072711960731727}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
+    - target: {fileID: 919132149155446097, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
       propertyPath: m_Name
-      value: sand_rocks
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: stone_mountain
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
---- !u!4 &1486786627823138434 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
+--- !u!4 &427891790243975239 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 21a2755112473a949be5a0f43110bdc2, type: 3}
-  m_PrefabInstance: {fileID: 1380522554586796393}
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 22881df983c300540a0baf716e8b5cfe, type: 3}
+  m_PrefabInstance: {fileID: 178618058669111212}
   m_PrefabAsset: {fileID: 0}

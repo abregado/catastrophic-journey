@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BaseTile: MonoBehaviour, IMapTile {
+public class BaseTile: MonoBehaviour {
     protected TileChangeHandler _changeHandler;
     protected TurnHandler _turnHandler;
     
@@ -11,6 +11,10 @@ public class BaseTile: MonoBehaviour, IMapTile {
         _turnHandler = turner;
         
         OnTileCreated();
+    }
+
+    public virtual void Activate() {
+        
     }
     
     protected void CenterTile() {

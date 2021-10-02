@@ -8,18 +8,27 @@ public class TurnHandler: MonoBehaviour {
     private TileChangeHandler _changeHandler;
     
     public int _turnCount;
-    public bool _gameRunning;
+    public bool _gameRunning = true;
 
     private List<TurnEvent> _turnEvents;
     
-    void Start() {
-        _changeHandler = FindObjectOfType<TileChangeHandler>();
+    public void Init(TileChangeHandler changer) {
+        _changeHandler = changer;
+        
         _turnEvents = new List<TurnEvent>();
+        
+        StartGame();
     }
 
     private void StartGame() {
         _turnCount = 0;
         _turnEvents.Clear();
+        
+        BaseTile[] tilesToActivate = FindObjectsOfType<BaseTile>();
+        foreach (BaseTile tile in tilesToActivate) {
+            tile.Activate();
+        }
+        Debug.Log("Activated " + tilesToActivate.Length + " tiles");
     }
 
     private void Update() {
@@ -40,12 +49,17 @@ public class TurnHandler: MonoBehaviour {
         if (_turnEvents.Count == 0) {
             return;
         }
-        
-        while (_turnEvents[0].turn == _turnCount) {
-            TurnEvent te = _turnEvents[0]; 
-            _turnEvents.RemoveAt(0);
-            _changeHandler.ChangeTileAtPosition(te.position,te.newTileIndex);
+
+        for (int i = _turnEvents.Count-1; i >= 0 ; i--) {
+            if (_turnEvents[i] != null && _turnEvents[i].turn <= _turnCount) {
+                TurnEvent te = _turnEvents[i];
+                Debug.Log(te.position);
+                Debug.Log(te.newTileIndex);
+                _changeHandler.ChangeTileAtPosition(te.position, te.newTileIndex);
+                _turnEvents.RemoveAt(i);
+            }
         }
+        
     }
 
     public void AddEvent(int wait, Vector3 position,string newTileIndex) {

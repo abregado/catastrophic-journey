@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5257072711960731727}
   - component: {fileID: 2551283080391509623}
-  - component: {fileID: 3375363609999424796}
+  - component: {fileID: 6167417415829909979}
   m_Layer: 6
   m_Name: GrassTile
   m_TagString: Untagged
@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexName: grass
---- !u!64 &3375363609999424796
-MeshCollider:
+--- !u!135 &6167417415829909979
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -56,10 +56,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3906130615805142554, guid: ed4b9b03dcda6354c93b2b712fb6c173, type: 3}
+  serializedVersion: 2
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8225563761526776271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -114,6 +113,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ed4b9b03dcda6354c93b2b712fb6c173, type: 3}
       propertyPath: m_Name
       value: grass
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed4b9b03dcda6354c93b2b712fb6c173, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed4b9b03dcda6354c93b2b712fb6c173, type: 3}
