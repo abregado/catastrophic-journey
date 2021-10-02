@@ -17,4 +17,7 @@ MonoBehaviour:
   - {fileID: 2718078374815475557, guid: d05856b94830c9648b49f3522417a482, type: 3}
   - {fileID: 2718078374815475557, guid: 1f80a3ab75a41344096cff62301309d7, type: 3}
   - {fileID: 2718078374815475557, guid: c53b5f07574b6d446b09c354e21822ea, type: 3}
+  - {fileID: 2718078374815475557, guid: ff885724263a5ca4da9f8bb6bf430ca2, type: 3}
+  - {fileID: 2718078374815475557, guid: eaba4b82cd3aadb44a51027e3f6d4b70, type: 3}
+  - {fileID: 2718078374815475557, guid: 32af71950ed4ba44cb91e6d822a186f1, type: 3}
   eventMarkerPrefab: {fileID: 8118265683478646970, guid: fe5b9fdf04d7a7643a77e3bd5ba3cb5a, type: 3}

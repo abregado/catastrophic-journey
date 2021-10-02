@@ -94,6 +94,38 @@ public class TileChangeHandler : MonoBehaviour {
         return neighbourPositions.ToArray();
     }
 
+    public Vector3 GetNeighbourPositionOfTypes(Vector3 center, string[] typeIndexes) {
+        Vector3[] neighbours = GetNeighbourPositions(center);
+        
+        List<Vector3> correctType = new List<Vector3>();
+        
+        foreach (Vector3 pos in neighbours) {
+            BaseTile tile = GetGenericTileAtPosition(pos);
+            if (tile != null) {
+                bool result = false;
+                string tileIndex = tile.GetTileIndex();
+
+                foreach (string index in typeIndexes) {
+                    if (tileIndex == index) {
+                        result = true;
+                    }
+                }    
+                
+                if (result) {
+                    correctType.Add(pos);
+                }
+            }
+        }
+
+        if (correctType.Count == 0) {
+            return new Vector3(-1000f,-1000f,-1000f);
+        }
+        
+        Vector3 randPos = correctType[Random.Range(0,correctType.Count-1)];
+        
+        return randPos;
+    }
+    
     public Vector3 GetNeighbourPositionOfType(Vector3 center, string typeIndex) {
         Vector3[] neighbours = GetNeighbourPositions(center);
         
