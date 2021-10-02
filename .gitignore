@@ -72,3 +72,5 @@ crashlytics-build.properties
 
 #IntelliJ
 .idea
+
+/[Aa]ssets/Models/FBX
