@@ -5,6 +5,8 @@ public class BaseTile: MonoBehaviour {
     protected TurnHandler _turnHandler;
     
     public string indexName = "default";
+    public bool isDisaster;
+    public int generatedWeight = 0;
     
     public virtual void Init(TileChangeHandler changer, TurnHandler turner) {
         _changeHandler = changer;

@@ -7,5 +7,6 @@ using UnityEngine;
 public class Res : ScriptableObject
 {
     public GameObject[] tilePrefabs;
-    
+
+    public GameObject eventMarkerPrefab;
 }

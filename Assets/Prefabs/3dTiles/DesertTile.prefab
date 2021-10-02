@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexName: desert
+  isDisaster: 0
+  generatedWeight: 2
 --- !u!135 &6210692981888714058
 SphereCollider:
   m_ObjectHideFlags: 0

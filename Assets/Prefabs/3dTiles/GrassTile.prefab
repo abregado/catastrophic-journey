@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexName: grass
+  isDisaster: 0
+  generatedWeight: 10
 --- !u!135 &6167417415829909979
 SphereCollider:
   m_ObjectHideFlags: 0
