@@ -5108,9 +5108,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexName: volcano
-  isDisaster: 1
   isWalkable: 0
   generatedWeight: 0
+  disasterWeight: 5
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &232129110125580418
 MeshCollider:

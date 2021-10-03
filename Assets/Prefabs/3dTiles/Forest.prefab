@@ -48,7 +48,7 @@ MonoBehaviour:
   indexName: forest
   isDisaster: 0
   isWalkable: 1
-  generatedWeight: 10
+  generatedWeight: 3
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &8326688456267894745
 MeshCollider:

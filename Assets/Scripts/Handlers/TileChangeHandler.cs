@@ -33,14 +33,14 @@ public class TileChangeHandler : MonoBehaviour {
         _grid = GetComponent<Grid>();
         _tilemap = transform.Find("Tilemap").transform.GetComponent<Tilemap>();
         _selectionTilemap = transform.Find("SelectionTilemap").transform.GetComponent<Tilemap>();
-        _tiles = new List<BaseTile>();
-        
+        _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref ro playerhandler
         _playerObj = GameObject.Find("PlayerObj").GetComponent<Transform>();
         _cameraTrans = Camera.main.transform;
         _turnHandler = FindObjectOfType<TurnHandler>();
-        _turnHandler.Init(this);
-
-        _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref ro playerhandler
+        
+        _tiles = new List<BaseTile>();
+        
+        _turnHandler.Init(this, _playerHandler);
         _playerHandler.Init(_grid, _playerObj, _cameraTrans, _turnHandler, _selectionTilemap, this); //pass ref to grid to playerhandler
 
         GenerateLevel();
@@ -241,7 +241,7 @@ public class TileChangeHandler : MonoBehaviour {
 
         foreach (GameObject prefab in resources.tilePrefabs) {
             BaseTile tile = prefab.GetComponent<BaseTile>();
-            if (tile.isDisaster == false && tile.generatedWeight > 0) {
+            if (tile.disasterWeight == 0 && tile.generatedWeight > 0) {
                 for (int i = 0; i < tile.generatedWeight; i++) {
                     pool.Add(tile.indexName);
                 }
@@ -360,6 +360,29 @@ public class TileChangeHandler : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public Vector3Int GetRandomStripPos(int centerX) {
+        _tilemap.CompressBounds();
+        BoundsInt bounds = _tilemap.cellBounds;
+        int spawnX = centerX + Random.Range(-2, 2);
+        int spawnY = Random.Range(bounds.yMin, bounds.yMax);
+
+        return new Vector3Int(spawnX, spawnY, 0);
+    }
+
+    public string GetRandomDisaster() {
+        List<string> disasters = new List<string>();
+        foreach (GameObject prefab in resources.tilePrefabs) {
+            BaseTile tile = prefab.GetComponent<BaseTile>();
+            if (tile.disasterWeight>0) {
+                for (int i = 0; i < tile.disasterWeight; i++) {
+                    disasters.Add(tile.indexName);
+                }
+            }
+        }
+
+        return disasters[Random.Range(0, disasters.Count - 1)];
     }
 }
 

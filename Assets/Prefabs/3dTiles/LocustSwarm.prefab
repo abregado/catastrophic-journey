@@ -48,9 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexName: locust-swarm
-  isDisaster: 1
-  isWalkable: 1
+  isWalkable: 0
   generatedWeight: 0
+  disasterWeight: 1
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &8818036685581616569
 MeshCollider:

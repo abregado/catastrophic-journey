@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 public class LavaHot: BaseTile {
     private string[] effectingTypes = {
         "grass",
+        "water",
+        "forest",
         "desert",
         "locust-swarm"
     };
@@ -14,9 +16,8 @@ public class LavaHot: BaseTile {
         _turnHandler.AddEvent(3, cellPosition, "lava-cold",true);
         BaseTile randTile = _changeHandler.GetRandomNeighbourTileOfTypes(this, effectingTypes);
         
-        
-        if (randTile != null && Random.Range(0,100)<50) {
-            _turnHandler.AddEvent(1, randTile.cellPosition, "lava-hot");
+        if (randTile != null) {
+            _turnHandler.AddEvent(1, randTile.cellPosition, "lava-cold");
             return;
         }
         

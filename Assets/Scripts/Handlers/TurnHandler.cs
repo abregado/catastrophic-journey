@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TurnHandler: MonoBehaviour {
     private TileChangeHandler _changeHandler;
+    private PlayerHandler _player;
     
     public int _turnCount;
     public bool _gameRunning = true;
 
     private List<TurnEvent> _turnEvents;
     
-    public void Init(TileChangeHandler changer) {
+    public void Init(TileChangeHandler changer, PlayerHandler player) {
         _changeHandler = changer;
-        
+        _player = player;
         _turnEvents = new List<TurnEvent>();
         
     }
@@ -40,6 +41,8 @@ public class TurnHandler: MonoBehaviour {
     public void DoTurn() {
         _turnCount++;
         ProcessEventStack();
+
+        GenerateNewDisasters();
     }
 
     private void ProcessEventStack() {
@@ -55,6 +58,17 @@ public class TurnHandler: MonoBehaviour {
             }
         }
         
+    }
+
+    private void GenerateNewDisasters() {
+        BaseTile playerTile = _player.GetPlayerTile();
+        int xAbs = playerTile.cellPosition.x;
+        if (_turnCount % 3 == 0) {
+            int spawnX = Math.Max(xAbs,_turnCount*-2) - Random.Range(6, 15);
+            Vector3Int disasterCell = _changeHandler.GetRandomStripPos(spawnX);
+            string randomDisaster = _changeHandler.GetRandomDisaster();
+            AddEvent(3,disasterCell,randomDisaster,true);
+        }
     }
 
     public void AddEvent(int wait, Vector3Int cell,string newTileIndex,bool overrideEvent = false) {

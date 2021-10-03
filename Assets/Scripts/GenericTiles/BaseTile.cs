@@ -6,9 +6,9 @@ public class BaseTile: MonoBehaviour {
     protected PlayerHandler _playerHandler;
 
     public string indexName = "default";
-    public bool isDisaster;
     public bool isWalkable;
     public int generatedWeight = 0;
+    public int disasterWeight = 0;
     
     public Vector3Int cellPosition;
     

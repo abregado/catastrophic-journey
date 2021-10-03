@@ -43,12 +43,16 @@ public class PlayerHandler : MonoBehaviour
 
     private void UpdateWalkableSelectionArea() {
         //test section tilemap
-        BaseTile playerTile = _changeHandler.GetTileAtPositionByList(_playerObj.transform.position);
+        BaseTile playerTile = GetPlayerTile();
         _selectableTiles = _changeHandler.FloodFillWalkable(playerTile, PLAYER_SPEED-1);
         _selectionTilemap.ClearAllTiles();
         foreach (BaseTile tile in _selectableTiles) {
             _selectionTilemap.SetTile(tile.cellPosition,_changeHandler.resources.selectionTile);
         }
+    }
+
+    public BaseTile GetPlayerTile() {
+        return _changeHandler.GetTileAtPositionByList(_playerObj.transform.position);
     }
 
     private bool IsTileSelectableNow(BaseTile tile) {
