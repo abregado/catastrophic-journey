@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5257072711960731727}
-  - component: {fileID: 6210692981888714058}
   - component: {fileID: -3589031004677666580}
+  - component: {fileID: 5382703797675310993}
   m_Layer: 6
   m_Name: DesertTile
   m_TagString: Untagged
@@ -33,19 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &6210692981888714058
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2718078374815475557}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-3589031004677666580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +48,21 @@ MonoBehaviour:
   indexName: desert
   isDisaster: 0
   generatedWeight: 2
+  cellPosition: {x: 0, y: 0, z: 0}
+--- !u!64 &5382703797675310993
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2718078374815475557}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3906130615805142554, guid: ed4b9b03dcda6354c93b2b712fb6c173, type: 3}
 --- !u!1001 &1380522554586796393
 PrefabInstance:
   m_ObjectHideFlags: 0

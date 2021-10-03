@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5257072711960731727}
-  - component: {fileID: 6167417415829909979}
   - component: {fileID: 8647168986476997803}
+  - component: {fileID: 2972083536964428596}
   m_Layer: 6
   m_Name: LavaHot
   m_TagString: Untagged
@@ -33,19 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &6167417415829909979
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2718078374815475557}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8647168986476997803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +48,21 @@ MonoBehaviour:
   indexName: lava-hot
   isDisaster: 0
   generatedWeight: 0
+  cellPosition: {x: 0, y: 0, z: 0}
+--- !u!64 &2972083536964428596
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2718078374815475557}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3906130615805142554, guid: ed4b9b03dcda6354c93b2b712fb6c173, type: 3}
 --- !u!1001 &8727436697883736814
 PrefabInstance:
   m_ObjectHideFlags: 0
