@@ -22,13 +22,11 @@ public class TurnHandler: MonoBehaviour {
 
     private void StartGame() {
         _turnCount = 0;
+        ClearEvents();
+    }
+
+    public void ClearEvents() {
         _turnEvents.Clear();
-        
-        // BaseTile[] tilesToActivate = FindObjectsOfType<BaseTile>();
-        // foreach (BaseTile tile in tilesToActivate) {
-        //     tile.Activate();
-        // }
-        // Debug.Log("Activated " + tilesToActivate.Length + " tiles");
     }
 
     private void Update() {

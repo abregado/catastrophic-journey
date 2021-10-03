@@ -200,6 +200,8 @@ public class TileChangeHandler : MonoBehaviour {
 
 
     private void GenerateLevel() {
+        ClearAllTiles();
+        
         List<BaseTile> waterStarts = new List<BaseTile>();
         List<BaseTile> waterTiles = new List<BaseTile>();
         List<BaseTile> mountainTiles = new List<BaseTile>();
@@ -245,6 +247,15 @@ public class TileChangeHandler : MonoBehaviour {
         //Forest spreading
         
         ActivateAllTiles();
+    }
+
+    private void ClearAllTiles() {
+        for (int i = _tileParent.childCount-1; i >= 0; i--) {
+            var go = _tileParent.gameObject.transform.GetChild(i);
+            Destroy(go.gameObject);
+        }
+        _tiles.Clear();
+        _turnHandler.ClearEvents();
     }
 
     private void ActivateAllTiles() {
