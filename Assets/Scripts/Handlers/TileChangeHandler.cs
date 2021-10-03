@@ -17,6 +17,9 @@ public class TileChangeHandler : MonoBehaviour {
     
     private Dictionary<string, GameObject> _tilePrefabs;
 
+    [SerializeField]
+    private Transform _tileParent;
+
     void Start() {
         _grid = GetComponent<Grid>();
         _tilemap = transform.Find("Tilemap").transform.GetComponent<Tilemap>();
@@ -32,6 +35,8 @@ public class TileChangeHandler : MonoBehaviour {
         Debug.Log("Initialized " + tilesToInit.Length + " tiles");
         
         _turnHandler.Init(this);
+        
+        GenerateLevel();
     }
 
     public Vector3 GetTileCentreAtPosition(Vector3 position) {
@@ -152,11 +157,19 @@ public class TileChangeHandler : MonoBehaviour {
         BaseTile oldTile = GetGenericTileAtPosition(position);
         GameObject prefab = GetTilePrefab(newTileIndex);
 
-        Destroy(oldTile.gameObject);
-        GameObject newGO = Instantiate(prefab, position, Quaternion.identity);
+        if (oldTile) {
+            Destroy(oldTile.gameObject);    
+        }
+        GameObject newGO = Instantiate(prefab,_tileParent);
+        newGO.transform.SetPositionAndRotation(position,quaternion.identity);
         BaseTile newTile = newGO.GetComponent<BaseTile>();
         newTile.Init(this,_turnHandler);
         newTile.Activate();
+    }
+
+    public void ChangeTileAtCell(Vector3Int cell, string newTileIndex) {
+        Vector3 position = _grid.GetCellCenterWorld(cell);
+        ChangeTileAtPosition(position,newTileIndex);
     }
 
     private void BuildTilePrefabDictionary() {
@@ -179,5 +192,28 @@ public class TileChangeHandler : MonoBehaviour {
             Debug.LogError("No TilePrefab found with index " + index);
         }
         return _tilePrefabs[index];
+    }
+
+
+    private void GenerateLevel() {
+        List<String> pool = new List<string>();
+
+        foreach (GameObject prefab in resources.tilePrefabs) {
+            BaseTile tile = prefab.GetComponent<BaseTile>();
+            if (tile.isDisaster == false && tile.generatedWeight > 0) {
+                for (int i = 0; i < tile.generatedWeight; i++) {
+                    pool.Add(tile.indexName);
+                }
+            }
+        }
+
+        _tilemap.CompressBounds();
+        BoundsInt bounds = _tilemap.cellBounds;
+        for (int x = bounds.xMin; x < bounds.xMax; x++) {
+            for (int y = bounds.yMin; y < bounds.yMax; y++) {
+                string randomType = pool[Random.Range(0, pool.Count)];
+                ChangeTileAtCell(new Vector3Int(x, y, 0),randomType);
+            }
+        }
     }
 }
