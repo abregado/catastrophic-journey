@@ -8,6 +8,8 @@ public class BaseTile: MonoBehaviour {
     public bool isDisaster;
     public int generatedWeight = 0;
     
+    public Vector3Int cellPosition;
+    
     public virtual void Init(TileChangeHandler changer, TurnHandler turner) {
         _changeHandler = changer;
         _turnHandler = turner;
@@ -20,8 +22,10 @@ public class BaseTile: MonoBehaviour {
     }
     
     protected void CenterTile() {
+        Vector3Int cellPos = _changeHandler.GetCellAtPosition(transform.position);
         Vector3 newPos = _changeHandler.GetTileCentreAtPosition(transform.position);
         transform.position = newPos;
+        cellPosition = cellPos;
     }
 
     public virtual void OnTileCreated() {

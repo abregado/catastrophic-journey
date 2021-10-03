@@ -61,8 +61,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexName: locust-swarm
-  isDisaster: 1
-  generatedWeight: 1
+  isDisaster: 0
+  generatedWeight: 2
 --- !u!114 &1500044240891284284
 MonoBehaviour:
   m_ObjectHideFlags: 0

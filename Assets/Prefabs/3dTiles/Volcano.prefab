@@ -5121,8 +5121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexName: volcano
-  isDisaster: 1
-  generatedWeight: 0
+  isDisaster: 0
+  generatedWeight: 1
 --- !u!1001 &2282988571135514050
 PrefabInstance:
   m_ObjectHideFlags: 0

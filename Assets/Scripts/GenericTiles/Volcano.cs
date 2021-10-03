@@ -20,7 +20,7 @@ public class Volcano: BaseTile {
         base.Init(changer, turner);
         _animation = transform.GetComponentInChildren<DOTweenAnimation>();
         _particles = transform.GetComponentInChildren<ParticleSystem>();
-        Debug.Log(_animation);
+        //Debug.Log(_animation);
         _particles.Play();
     }
 
@@ -36,7 +36,7 @@ public class Volcano: BaseTile {
         Vector3 randPos = _changeHandler.GetNeighbourPositionOfTypes(transform.position, effectingTypes);
 
         if (randPos.x == -1000f) {
-            Debug.Log("volcano had no suitable neighbours");
+            //Debug.Log("volcano had no suitable neighbours");
             return;
         }
 

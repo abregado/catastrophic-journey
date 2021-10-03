@@ -60,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexName: mountain
   isDisaster: 0
-  generatedWeight: 1
+  generatedWeight: 3
 --- !u!1001 &178618058669111212
 PrefabInstance:
   m_ObjectHideFlags: 0
