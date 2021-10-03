@@ -16,8 +16,8 @@ public class Volcano: BaseTile {
     private DOTweenAnimation _animation;
     private ParticleSystem _particles;
 
-    public override void Init(TileChangeHandler changer, TurnHandler turner) {
-        base.Init(changer, turner);
+    public override void Init(TileChangeHandler changer, TurnHandler turner, PlayerHandler player) {
+        base.Init(changer, turner, player);
         _animation = transform.GetComponentInChildren<DOTweenAnimation>();
         _particles = transform.GetComponentInChildren<ParticleSystem>();
         //Debug.Log(_animation);

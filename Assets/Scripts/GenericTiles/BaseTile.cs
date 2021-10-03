@@ -3,16 +3,18 @@
 public class BaseTile: MonoBehaviour {
     protected TileChangeHandler _changeHandler;
     protected TurnHandler _turnHandler;
-    
+    protected PlayerHandler _playerHandler;
+
     public string indexName = "default";
     public bool isDisaster;
     public int generatedWeight = 0;
     
     public Vector3Int cellPosition;
     
-    public virtual void Init(TileChangeHandler changer, TurnHandler turner) {
+    public virtual void Init(TileChangeHandler changer, TurnHandler turner, PlayerHandler player) {
         _changeHandler = changer;
         _turnHandler = turner;
+        _playerHandler = player;
         
         OnTileCreated();
     }
@@ -38,5 +40,10 @@ public class BaseTile: MonoBehaviour {
     
     public Vector3 GetPosition() {
         return transform.position;
+    }
+    //prints name of object mouse is over
+    void OnMouseOver()
+    {
+        _playerHandler.SetMousedTile(gameObject);
     }
 }

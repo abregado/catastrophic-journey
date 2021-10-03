@@ -13,6 +13,8 @@ public class TileChangeHandler : MonoBehaviour {
     private Grid _grid;
     private Tilemap _tilemap;
     private TurnHandler _turnHandler;
+    private PlayerHandler _playerHandler;
+    private Transform _playerObj;
     public Res resources;
     
     private Dictionary<string, GameObject> _tilePrefabs;
@@ -27,13 +29,17 @@ public class TileChangeHandler : MonoBehaviour {
         _tilemap = transform.Find("Tilemap").transform.GetComponent<Tilemap>();
         _tiles = new List<BaseTile>();
         
+        _playerObj = GameObject.Find("PlayerObj").GetComponent<Transform>();
+        _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref ro playerhandler
+        _playerHandler.init(_grid, _playerObj); //pass ref to grid to playerhandler
+
         BuildTilePrefabDictionary();
         _turnHandler = FindObjectOfType<TurnHandler>();
-        
+         
         BaseTile[] tilesToInit = FindObjectsOfType<BaseTile>();
         foreach (BaseTile tile in tilesToInit) {
             BaseTile maptile = tile;
-            maptile.Init(this, _turnHandler);
+            maptile.Init(this, _turnHandler, _playerHandler);
             _tiles.Add(maptile);
         }
         Debug.Log("Initialized " + tilesToInit.Length + " tiles");
@@ -71,8 +77,11 @@ public class TileChangeHandler : MonoBehaviour {
                 return tile;
             }
         }
-
         return null;
+    }
+    public Vector3 GetTileGridCoordinate(Vector3 position) {
+        Vector3Int cell = _grid.WorldToCell(position);
+        return cell;
     }
 
     public BaseTile GetGenericTileAtPosition(Vector3 position, bool debug = true) {
@@ -258,7 +267,7 @@ public class TileChangeHandler : MonoBehaviour {
             GameObject newGO = Instantiate(prefab, _tileParent);
             newGO.transform.SetPositionAndRotation(position, quaternion.identity);
             BaseTile newTile = newGO.GetComponent<BaseTile>();
-            newTile.Init(this, _turnHandler);
+            newTile.Init(this, _turnHandler, _playerHandler));
             newTile.Activate();
         }
     }
@@ -266,6 +275,11 @@ public class TileChangeHandler : MonoBehaviour {
     public void ChangeTileAtCell(Vector3Int cell, string newTileIndex) {
         Vector3 position = _grid.GetCellCenterWorld(cell);
         ChangeTileAtPosition(position,newTileIndex);
+        Destroy(oldTile.gameObject);
+        GameObject newGO = Instantiate(prefab, position, Quaternion.identity);
+        BaseTile newTile = newGO.GetComponent<BaseTile>();
+        newTile.Init(this,_turnHandler, _playerHandler);
+        newTile.Activate();
     }
 
     private void BuildTilePrefabDictionary() {
