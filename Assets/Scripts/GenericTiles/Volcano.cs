@@ -41,11 +41,11 @@ public class Volcano: BaseTile {
         }
 
         if (_changeHandler.GetGenericTileAtPosition(randPos).indexName == "lava-hot") {
-            if (Random.RandomRange(0, 100) < 80) {
+            if (Random.Range(0, 100) < 80) {
                 _turnHandler.AddEvent(1, transform.position, "volcano");
             }
         } else if (_changeHandler.GetGenericTileAtPosition(randPos).indexName == "lava-cold") {
-            if (Random.RandomRange(0, 100) < 80) {
+            if (Random.Range(0, 100) < 80) {
                 _turnHandler.AddEvent(1, randPos, "lava-hot");
             }
         } else {

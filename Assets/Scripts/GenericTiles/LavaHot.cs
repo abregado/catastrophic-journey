@@ -26,7 +26,7 @@ public class LavaHot: BaseTile {
             _turnHandler.AddEvent(2, randPos, "lava-hot");    
         }
         else {
-            if (Random.RandomRange(0, 100) < 80) {
+            if (Random.Range(0, 100) < 80) {
                 _turnHandler.AddEvent(2, randPos, "lava-hot");
             }
         }
