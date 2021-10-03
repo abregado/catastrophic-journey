@@ -203,8 +203,8 @@ public class TileChangeHandler : MonoBehaviour {
         ClearAllTiles();
         
         List<BaseTile> waterStarts = new List<BaseTile>();
-        List<BaseTile> waterTiles = new List<BaseTile>();
         List<BaseTile> mountainTiles = new List<BaseTile>();
+        List<BaseTile> forestTiles = new List<BaseTile>();
         
         //Basic generation
         List<String> pool = new List<string>();
@@ -232,6 +232,9 @@ public class TileChangeHandler : MonoBehaviour {
                 if (randomType == "mountain") {
                     mountainTiles.Add(tile);
                 }
+                if (randomType == "forest") {
+                    forestTiles.Add(tile);
+                }
             }
         }
         
@@ -240,11 +243,12 @@ public class TileChangeHandler : MonoBehaviour {
         
         //Water worming
         
-        
-        //ApplyMoisture(waterStarts.ToArray());
-        //ApplyMoisture(waterTiles.ToArray());
+        CreateRivers(waterStarts.ToArray());
+        ApplyMoisture();
         
         //Forest spreading
+
+        GrowForests(forestTiles.ToArray());
         
         ActivateAllTiles();
     }
@@ -263,25 +267,69 @@ public class TileChangeHandler : MonoBehaviour {
             tile.Activate();
         }
     }
-    private void FlowWater(Vector3Int cell, int stepsRemaining) {
-        string[] allowedDestinations = {"desert","grass"};
+
+    private void GrowForests(BaseTile[] forestTiles) {
+        foreach (BaseTile tile in forestTiles) {
+            SpreadTrees(tile,9);
+        }
     }
     
-    private void ApplyMoisture(Vector3Int[] cells) {
+    private void SpreadTrees(BaseTile tile, int stepsRemaining) {
+        string[] allowedDestinations = {"grass"};
+        
+        BaseTile nextFlow = GetRandomNeighbourTileOfTypes(tile, allowedDestinations);
+        if (nextFlow != null) {
+            ChangeTileAtCell(nextFlow.cellPosition, "forest", true);
+            if (stepsRemaining > 0) {
+                SpreadTrees(nextFlow, stepsRemaining - 1);
+            }
+        }
+    }
 
+    private void CreateRivers(BaseTile[] waterStarts) {
+        foreach (BaseTile tile in waterStarts) {
+            FlowWater(tile,6);
+        }
+    }
+    private void FlowWater(BaseTile tile, int stepsRemaining) {
+        string[] allowedDestinations = {"desert","grass"};
+        
+        BaseTile nextFlow = GetRandomNeighbourTileOfTypes(tile, allowedDestinations);
+        if (nextFlow != null) {
+            ChangeTileAtCell(nextFlow.cellPosition, "water", true);
+            if (stepsRemaining > 0) {
+                FlowWater(nextFlow, stepsRemaining - 1);
+            }
+        }
+    }
+    
+    private void ApplyMoisture() {
+        List<BaseTile> waterTiles = new List<BaseTile>();
+        
+        foreach (BaseTile tile in _tiles) {
+            if (tile.indexName == "water") {
+                waterTiles.Add(tile);
+            }
+        }
+
+        foreach (BaseTile waterTile in waterTiles) {
+            BaseTile[] neighbours = GetAllNeighbourTilesOfTypes(waterTile,new[] {"desert"});
+            foreach (BaseTile waterNeighbour in neighbours) {
+                ChangeTileAtCell(waterNeighbour.cellPosition, "grass", true);
+            }
+        }
     }
     
     private void ApplyHills(BaseTile[] tiles) {
         foreach (BaseTile mountainTile in tiles) {
             BaseTile[] neighbours = GetNeighbourTiles(mountainTile);
             foreach (BaseTile tile in neighbours) {
-                if (IsOfWantedType(tile,new []{"grass","desert"}))
+                if (IsOfWantedType(tile,new []{"grass","desert"})&&Random.Range(0,100)<50)
                 {
                     ChangeTileAtCell(tile.cellPosition, "hill",true);
                 }
             }
         }
-        
     }
 }
 
