@@ -67,7 +67,12 @@ public class PlayerHandler : MonoBehaviour
     
     // Update is called once per frame
     void Update()
-    { 
+    {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            _changeHandler.RestartGame();
+            _playerObj.position = Vector3.zero;
+        }
+        
         if (mousedOverTile != null) {
             if (IsTileSelectableNow(mousedOverTile)){
                 tilePos = mousedOverTile.transform.position;

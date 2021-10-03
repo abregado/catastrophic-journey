@@ -53,6 +53,11 @@ public class TileChangeHandler : MonoBehaviour {
         _playerHandler.StartGame();
     }
 
+    public void RestartGame() {
+        GenerateLevel();
+        StartGame();
+    }
+
     public Vector3 GetTileCentreAtCell(Vector3Int cell) {
         Vector3 result = _tilemap.GetCellCenterWorld(cell);
         return result;
