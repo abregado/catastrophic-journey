@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexName: grass
   isDisaster: 0
+  isWalkable: 1
   generatedWeight: 50
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &8326688456267894745

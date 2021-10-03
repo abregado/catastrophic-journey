@@ -7,6 +7,7 @@ public class BaseTile: MonoBehaviour {
 
     public string indexName = "default";
     public bool isDisaster;
+    public bool isWalkable;
     public int generatedWeight = 0;
     
     public Vector3Int cellPosition;
