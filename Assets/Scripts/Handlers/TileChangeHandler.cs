@@ -32,12 +32,14 @@ public class TileChangeHandler : MonoBehaviour {
         
         _cameraTrans = GameObject.Find("Main Camera").GetComponent<Transform>();
         _playerObj = GameObject.Find("PlayerObj").GetComponent<Transform>();
-        _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref ro playerhandler
-        _playerHandler.init(_grid, _playerObj, _cameraTrans); //pass ref to grid to playerhandler
+        
 
         BuildTilePrefabDictionary();
         _turnHandler = FindObjectOfType<TurnHandler>();
-         
+
+        _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref to playerhandler
+        _playerHandler.init(_grid, _playerObj, _cameraTrans, _turnHandler); //pass ref to grid to playerhandler
+
         BaseTile[] tilesToInit = FindObjectsOfType<BaseTile>();
         foreach (BaseTile tile in tilesToInit) {
             BaseTile maptile = tile;
@@ -98,7 +100,7 @@ public class TileChangeHandler : MonoBehaviour {
             Debug.DrawRay(origin,direction * distance, Color.red,5f);    
         }
         if (Physics.Raycast(origin, direction, out hit, distance)) {
-            Debug.Log("hit");
+            //Debug.Log("hit");
             BaseTile tile = hit.collider.transform.GetComponent<BaseTile>();
             if (tile != null) {
                 return tile;

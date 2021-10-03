@@ -11,13 +11,14 @@ public class PlayerHandler : MonoBehaviour
     private Transform _playerObj;
     private Transform _cameraTrans;
     private Vector3 camOffset;
+    private TurnHandler _turnHandler;
     
-    
-    public void init(Grid grid, Transform playerObj, Transform cameraTrans)
+    public void init(Grid grid, Transform playerObj, Transform cameraTrans, TurnHandler turnHandler)
     {
         _grid = grid;
         _playerObj = playerObj;
         _cameraTrans = cameraTrans;
+        _turnHandler = turnHandler;
         camOffset = _cameraTrans.position - _playerObj.position;
     }
     
@@ -48,12 +49,13 @@ public class PlayerHandler : MonoBehaviour
             if(Input.GetMouseButtonDown(0) && (mousedOverTile.GetComponent<BaseTile>().isWalkable == true))
             {
             _playerObj.position = tilePos;
-
+            Debug.Log(mousedOverTile.GetComponent<BaseTile>().indexName);
             //tilePos.x = tilePos.x - 0.62303f;
             //tilePos.z = tilePos.z + 2.224154f;
             //tilePos.y = 3.881368f;
             //Debug.Log("Camera POS: " + tilePos);
             _cameraTrans.position = tilePos + camOffset;
+            _turnHandler.DoTurn();
             }
         }
         mousedOverTile = null;

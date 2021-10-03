@@ -40,7 +40,7 @@ public class TurnHandler: MonoBehaviour {
         }
     }
 
-    private void DoTurn() {
+    public void DoTurn() {
         _turnCount++;
         ProcessEventStack();
     }
