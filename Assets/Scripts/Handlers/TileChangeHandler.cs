@@ -15,6 +15,7 @@ public class TileChangeHandler : MonoBehaviour {
     private TurnHandler _turnHandler;
     private PlayerHandler _playerHandler;
     private Transform _playerObj;
+    private Transform _cameraTrans;
     public Res resources;
     
     private Dictionary<string, GameObject> _tilePrefabs;
@@ -29,9 +30,10 @@ public class TileChangeHandler : MonoBehaviour {
         _tilemap = transform.Find("Tilemap").transform.GetComponent<Tilemap>();
         _tiles = new List<BaseTile>();
         
+        _cameraTrans = GameObject.Find("Main Camera").GetComponent<Transform>();
         _playerObj = GameObject.Find("PlayerObj").GetComponent<Transform>();
         _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref ro playerhandler
-        _playerHandler.init(_grid, _playerObj); //pass ref to grid to playerhandler
+        _playerHandler.init(_grid, _playerObj, _cameraTrans); //pass ref to grid to playerhandler
 
         BuildTilePrefabDictionary();
         _turnHandler = FindObjectOfType<TurnHandler>();

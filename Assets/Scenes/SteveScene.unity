@@ -9224,6 +9224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resources: {fileID: 11400000, guid: 629775243c49984498f606b85cf6ec0d, type: 2}
+  _tileParent: {fileID: 0}
 --- !u!156049354 &974912237
 Grid:
   m_ObjectHideFlags: 0
@@ -9355,7 +9356,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979579321}
   m_LocalRotation: {x: 0.17176145, y: -0.82820255, z: 0.37223175, w: 0.38212845}
-  m_LocalPosition: {x: 1.1089227, y: 3.8813677, z: 2.2241538}
+  m_LocalPosition: {x: 1.108923, y: 3.8813677, z: 2.2241538}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10491,7 +10492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8669290550420141771, guid: 873e3092206e51940ad41d901aa2a0b3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.731953
       objectReference: {fileID: 0}
     - target: {fileID: 8669290550420141771, guid: 873e3092206e51940ad41d901aa2a0b3, type: 3}
       propertyPath: m_LocalPosition.y

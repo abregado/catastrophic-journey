@@ -9,13 +9,16 @@ public class PlayerHandler : MonoBehaviour
     private Vector3 gridPos;
     private Grid _grid;
     private Transform _playerObj;
-   
+    private Transform _cameraTrans;
+    private Vector3 camOffset;
     
     
-    public void init(Grid grid, Transform playerObj)
+    public void init(Grid grid, Transform playerObj, Transform cameraTrans)
     {
         _grid = grid;
         _playerObj = playerObj;
+        _cameraTrans = cameraTrans;
+        camOffset = _cameraTrans.position - _playerObj.position;
     }
     
     
@@ -38,13 +41,19 @@ public class PlayerHandler : MonoBehaviour
         if (mousedOverTile != null)
         {
             tilePos = mousedOverTile.GetComponent<BaseTile>().GetPosition();
-            Debug.Log("Moused Over Tile: " + mousedOverTile.name);
-            Debug.Log("Position: " + tilePos);
+            //Debug.Log("Moused Over Tile: " + mousedOverTile.name);
+            //Debug.Log("Position: " + tilePos);
             gridPos = _grid.GetComponent<TileChangeHandler>().GetTileGridCoordinate(tilePos);
-            Debug.Log("Grid Position: " + gridPos);
+            //Debug.Log("Grid Position: " + gridPos);
             if(Input.GetMouseButtonDown(0))
             {
             _playerObj.position = tilePos;
+
+            //tilePos.x = tilePos.x - 0.62303f;
+            //tilePos.z = tilePos.z + 2.224154f;
+            //tilePos.y = 3.881368f;
+            //Debug.Log("Camera POS: " + tilePos);
+            _cameraTrans.position = tilePos + camOffset;
             }
         }
         mousedOverTile = null;
