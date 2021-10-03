@@ -10,7 +10,6 @@ public class Volcano: BaseTile {
         "desert",
         "locust-swarm",
         "lava-cold",
-        "lava-hot",
     };
 
     private DOTweenAnimation _animation;
@@ -21,36 +20,29 @@ public class Volcano: BaseTile {
         _animation = transform.GetComponentInChildren<DOTweenAnimation>();
         _particles = transform.GetComponentInChildren<ParticleSystem>();
         //Debug.Log(_animation);
-        _particles.Play();
+        
     }
 
     public override void Activate() {
-        CenterTile();
 
         if (Random.Range(0, 100) < 11) {
             //volcano stops erupting
             return;
         }
-
-        _turnHandler.AddEvent(Random.Range(3, 7), transform.position, "volcano");
-        Vector3 randPos = _changeHandler.GetNeighbourPositionOfTypes(transform.position, effectingTypes);
-
-        if (randPos.x == -1000f) {
-            //Debug.Log("volcano had no suitable neighbours");
+        
+        _particles.Play();
+        _turnHandler.AddEvent(Random.Range(3, 7), cellPosition, "volcano");
+        BaseTile[] neighbours = _changeHandler.GetAllNeighbourTilesOfTypes(this, effectingTypes);
+        
+        if (neighbours.Length == 0) {
             return;
         }
 
-        if (_changeHandler.GetGenericTileAtPosition(randPos).indexName == "lava-hot") {
-            if (Random.Range(0, 100) < 80) {
-                _turnHandler.AddEvent(1, transform.position, "volcano");
+        for (int i = 0; i < Math.Min(3,neighbours.Length); i++) {
+            BaseTile randTile = neighbours[Random.Range(0, neighbours.Length)];
+            if (randTile != null) {
+                _turnHandler.AddEvent(1, randTile.cellPosition, "lava-hot");    
             }
-        } else if (_changeHandler.GetGenericTileAtPosition(randPos).indexName == "lava-cold") {
-            if (Random.Range(0, 100) < 80) {
-                _turnHandler.AddEvent(1, randPos, "lava-hot");
-            }
-        } else {
-            _turnHandler.AddEvent(1, randPos, "lava-hot");
         }
-
     }
 }

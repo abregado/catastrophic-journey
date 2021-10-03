@@ -24,11 +24,11 @@ public class TurnHandler: MonoBehaviour {
         _turnCount = 0;
         _turnEvents.Clear();
         
-        BaseTile[] tilesToActivate = FindObjectsOfType<BaseTile>();
-        foreach (BaseTile tile in tilesToActivate) {
-            tile.Activate();
-        }
-        Debug.Log("Activated " + tilesToActivate.Length + " tiles");
+        // BaseTile[] tilesToActivate = FindObjectsOfType<BaseTile>();
+        // foreach (BaseTile tile in tilesToActivate) {
+        //     tile.Activate();
+        // }
+        // Debug.Log("Activated " + tilesToActivate.Length + " tiles");
     }
 
     private void Update() {
@@ -53,26 +53,26 @@ public class TurnHandler: MonoBehaviour {
         for (int i = _turnEvents.Count-1; i >= 0 ; i--) {
             if (_turnEvents[i] != null && _turnEvents[i].turn <= _turnCount) {
                 TurnEvent te = _turnEvents[i];
-                _changeHandler.ChangeTileAtPosition(te.position, te.newTileIndex);
+                _changeHandler.ChangeTileAtCell(te.cell, te.newTileIndex);
                 _turnEvents.RemoveAt(i);
             }
         }
         
     }
 
-    public void AddEvent(int wait, Vector3 position,string newTileIndex) {
-        if (TileAlreadyHasSoonerEvent(position, wait + _turnCount)) {
+    public void AddEvent(int wait, Vector3Int cell,string newTileIndex) {
+        if (TileAlreadyHasSoonerEvent(cell, wait + _turnCount)) {
             Debug.Log("already has earlier event for change: " + newTileIndex);
             return;
         }
-        _turnEvents.Add(new TurnEvent(_turnCount + wait,position,newTileIndex));
+        _turnEvents.Add(new TurnEvent(_turnCount + wait,cell,newTileIndex));
         List<TurnEvent> sortedList = _turnEvents.OrderBy(o => o.turn).ToList();
         _turnEvents = sortedList;
     }
 
     private bool TileAlreadyHasSoonerEvent(Vector3 position, int turn) {
         foreach (TurnEvent te in _turnEvents) {
-            if (position == te.position && te.turn >= turn) {
+            if (position == te.cell && te.turn >= turn) {
                 return true;
             }
         }
@@ -84,18 +84,18 @@ public class TurnHandler: MonoBehaviour {
 
 public class TurnEvent {
     public int turn;
-    public Vector3 position;
+    public Vector3Int cell;
     public string newTileIndex;
 
-    public TurnEvent(int turn, Vector3 position, string newTileIndex) {
+    public TurnEvent(int turn, Vector3Int cell, string newTileIndex) {
         this.turn = turn;
-        this.position = position;
+        this.cell = cell;
         this.newTileIndex = newTileIndex;
     }
 
     public override bool Equals(object obj) {
         TurnEvent te = obj as TurnEvent;
-        return te.turn == turn && te.position == position;
+        return te.turn == turn && te.cell == cell;
     }
     
 }

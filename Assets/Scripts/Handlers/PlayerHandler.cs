@@ -45,8 +45,8 @@ public class PlayerHandler : MonoBehaviour
             //Debug.Log("Moused Over Tile: " + mousedOverTile.name);
             //Debug.Log("Position: " + tilePos);
             gridPos = _grid.GetComponent<TileChangeHandler>().GetTileGridCoordinate(tilePos);
-            //Debug.Log("Grid Position: " + gridPos);
-            if(Input.GetMouseButtonDown(0) && (mousedOverTile.GetComponent<BaseTile>().isWalkable == true))
+            Debug.Log("Grid Position: " + gridPos);
+            if(Input.GetMouseButtonDown(0))
             {
             _playerObj.position = tilePos;
             Debug.Log(mousedOverTile.GetComponent<BaseTile>().indexName);

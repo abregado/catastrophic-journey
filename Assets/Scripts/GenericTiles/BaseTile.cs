@@ -26,7 +26,7 @@ public class BaseTile: MonoBehaviour {
     
     protected void CenterTile() {
         Vector3Int cellPos = _changeHandler.GetCellAtPosition(transform.position);
-        Vector3 newPos = _changeHandler.GetTileCentreAtPosition(transform.position);
+        Vector3 newPos = _changeHandler.GetTileCentreAtCell(cellPos);
         transform.position = newPos;
         cellPosition = cellPos;
     }

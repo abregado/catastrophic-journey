@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using Unity.Mathematics;
 using UnityEngine;
@@ -30,37 +31,25 @@ public class TileChangeHandler : MonoBehaviour {
         _tilemap = transform.Find("Tilemap").transform.GetComponent<Tilemap>();
         _tiles = new List<BaseTile>();
         
-        _cameraTrans = GameObject.Find("Main Camera").GetComponent<Transform>();
         _playerObj = GameObject.Find("PlayerObj").GetComponent<Transform>();
-        
-
-        BuildTilePrefabDictionary();
-        _turnHandler = FindObjectOfType<TurnHandler>();
-
-        _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref to playerhandler
+        _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref ro playerhandler
         _playerHandler.init(_grid, _playerObj, _cameraTrans, _turnHandler); //pass ref to grid to playerhandler
 
-        BaseTile[] tilesToInit = FindObjectsOfType<BaseTile>();
-        foreach (BaseTile tile in tilesToInit) {
-            BaseTile maptile = tile;
-            maptile.Init(this, _turnHandler, _playerHandler);
-            _tiles.Add(maptile);
-        }
-        Debug.Log("Initialized " + tilesToInit.Length + " tiles");
+        BuildTilePrefabDictionary();
         
+        _turnHandler = FindObjectOfType<TurnHandler>();
         _turnHandler.Init(this);
         
         GenerateLevel();
     }
 
-    public Vector3 GetTileCentreAtPosition(Vector3 position) {
-        Vector3Int cell = _grid.WorldToCell(position);
-        Vector3 result = _grid.GetCellCenterWorld(cell);
+    public Vector3 GetTileCentreAtCell(Vector3Int cell) {
+        Vector3 result = _tilemap.GetCellCenterWorld(cell);
         return result;
     }
     
     public Vector3Int GetCellAtPosition(Vector3 position) {
-        Vector3Int cell = _grid.WorldToCell(position);
+        Vector3Int cell = _tilemap.WorldToCell(position);
         return cell;
     }
 
@@ -74,8 +63,7 @@ public class TileChangeHandler : MonoBehaviour {
         return null;
     }
     
-    public BaseTile GetTileAtPositionByList(Vector3 position) {
-        Vector3Int cell = _grid.WorldToCell(position);
+    public BaseTile GetTileAtPositionByList(Vector3Int cell) {
         foreach (BaseTile tile in _tiles) {
             if (tile.cellPosition == cell) {
                 return tile;
@@ -88,197 +76,103 @@ public class TileChangeHandler : MonoBehaviour {
         return cell;
     }
 
-    public BaseTile GetGenericTileAtPosition(Vector3 position, bool debug = true) {
-        RaycastHit hit;
-        int mask = 1 << 6;
-
-        Vector3 origin = position + new Vector3(0, 5f, 0);
-        Vector3 direction = new Vector3(0, -1f, 0);
-        float distance = 6f;
-
-        if (debug) {
-            Debug.DrawRay(origin,direction * distance, Color.red,5f);    
-        }
-        if (Physics.Raycast(origin, direction, out hit, distance)) {
-            //Debug.Log("hit");
-            BaseTile tile = hit.collider.transform.GetComponent<BaseTile>();
-            if (tile != null) {
-                return tile;
-            }
-        }
-        return null;
-    }
-
-    public BaseTile[] GetNeighbour(Vector3 position) {
+    public BaseTile[] GetNeighbourTiles(BaseTile tile) {
         List<BaseTile> neighbours = new List<BaseTile>();
-        
-        Vector3Int centerCell = _grid.WorldToCell(position);
 
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) { 
-                Vector3Int neighbourCell = new Vector3Int(x, y, 0);
+        Vector3Int[] offsets = new[] {
+            new Vector3Int(1, 0, 0),
+            new Vector3Int(0, 1, 0),
+            new Vector3Int(0, -1, 0),
+            new Vector3Int(-1, 1, 0),
+            new Vector3Int(-1, 0, 0),
+            new Vector3Int(-1, -1, 0),
+        };
+
+        if (tile.cellPosition.y % 2 != 0) {
+            offsets = new[] {
+                new Vector3Int(0, -1, 0),
+                new Vector3Int(-1, 0, 0),
+                new Vector3Int(0, 1, 0),
+                new Vector3Int(1, -1, 0),
+                new Vector3Int(1, 0, 0),
+                new Vector3Int(1, 1, 0),
+            };
+        }
+        
+        foreach (Vector3Int offset in offsets) {
+            Vector3Int cellHere = tile.cellPosition + offset;
+            BaseTile tileHere = GetTileAtCellByList(cellHere);
+            if (tileHere != null) {
+                //Debug.Log(cellHere + " neighbour with tile " + tileHere.indexName);
+                neighbours.Add(tileHere);
             }
         }
 
         return neighbours.ToArray();
     }
 
-    public Vector3Int[] GetNeighbourCells(Vector3Int cell) {
-        Vector3[] neighbours = GetNeighbourPositions(_grid.GetCellCenterWorld(cell));
-        Debug.Log(neighbours.Length + " neighbours found");
-        return new []{Vector3Int.one};
+    public BaseTile GetRandomNeighbourTileOfTypes(BaseTile centerTile, string[] typeIndexes) {
+        BaseTile[] correctType = GetAllNeighbourTilesOfTypes(centerTile, typeIndexes);
+        
+        if (correctType.Length == 0) {
+            return null;
+        }
+        
+        BaseTile randTile = correctType[Random.Range(0,correctType.Length-1)];
+        
+        return randTile;
     }
     
-    public Vector3[] GetNeighbourPositions(Vector3 position) {
-        List<Vector3> neighbourPositions = new List<Vector3>();
-        
-        Vector3Int centerCell = _grid.WorldToCell(position);
-
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                if (x == -1 && y == -1) {
-                    continue;
-                }
-                if (x == -1 && y == 1) {
-                    continue;
-                }
-                if ((x == 0 && y == 0) == false) {
-                    neighbourPositions.Add(_grid.GetCellCenterWorld(centerCell + new Vector3Int(x, y, 0)));
-                }
+    public bool IsOfWantedType(BaseTile tile, string[] wantedTypes) {
+        foreach (string indexName in wantedTypes) {
+            if (tile.indexName == indexName) {
+                return true;
             }
         }
-        //Debug.Log("Neighbours count: " + neighbourPositions.Count);
-        return neighbourPositions.ToArray();
+
+        return false;
     }
 
-    public Vector3 GetNeighbourPositionOfTypes(Vector3 center, string[] typeIndexes) {
-        Vector3[] neighbours = GetNeighbourPositions(center);
+    public BaseTile[] GetAllNeighbourTilesOfTypes(BaseTile centerTile, string[] typeIndexes) {
+        BaseTile[] neighbours = GetNeighbourTiles(centerTile);
         
-        List<Vector3> correctType = new List<Vector3>();
+        List<BaseTile> correctType = new List<BaseTile>();
         
-        foreach (Vector3 pos in neighbours) {
-            BaseTile tile = GetGenericTileAtPosition(pos);
-            if (tile != null) {
-                bool result = false;
-                string tileIndex = tile.GetTileIndex();
-
-                foreach (string index in typeIndexes) {
-                    if (tileIndex == index) {
-                        result = true;
-                    }
-                }    
-                
-                if (result) {
-                    correctType.Add(pos);
-                }
+        foreach (BaseTile nTile in neighbours) {
+            if (IsOfWantedType(nTile,typeIndexes)) 
+            {
+                correctType.Add(nTile);
             }
         }
-
-        if (correctType.Count == 0) {
-            return new Vector3(-1000f,-1000f,-1000f);
-        }
         
-        Vector3 randPos = correctType[Random.Range(0,correctType.Count-1)];
-        
-        return randPos;
-    }
-    
-    public Vector3[] GetAllNeighbourPositionsOfTypes(Vector3 center, string[] typeIndexes) {
-        Vector3[] neighbours = GetNeighbourPositions(center);
-        
-        List<Vector3> correctType = new List<Vector3>();
-        
-        foreach (Vector3 pos in neighbours) {
-            BaseTile tile = GetGenericTileAtPosition(pos);
-            if (tile != null) {
-                bool result = false;
-                string tileIndex = tile.GetTileIndex();
-
-                foreach (string index in typeIndexes) {
-                    if (tileIndex == index) {
-                        result = true;
-                    }
-                }    
-                
-                if (result) {
-                    correctType.Add(pos);
-                }
-            }
-        }
-
         return correctType.ToArray();
     }
 
-    public Vector3Int[] GetAllNeighbourCellsOfTypes(Vector3Int center, string[] typeIndexes) {
-        Vector3Int[] neighbours = GetNeighbourCells(center);
-        
-        List<Vector3Int> correctType = new List<Vector3Int>();
-        
-        foreach (Vector3Int pos in neighbours) {
-            BaseTile tile = GetTileAtCellByList(pos);
-            if (tile != null) {
-                bool result = false;
-                string tileIndex = tile.GetTileIndex();
-
-                foreach (string index in typeIndexes) {
-                    if (tileIndex == index) {
-                        result = true;
-                    }
-                }    
-                
-                if (result) {
-                    correctType.Add(_grid.WorldToCell(pos));
-                }
-            }
-        }
-
-        return correctType.ToArray();
-    }
-    
-    public Vector3 GetNeighbourPositionOfType(Vector3 center, string typeIndex) {
-        Vector3[] neighbours = GetNeighbourPositions(center);
-        
-        List<Vector3> correctType = new List<Vector3>();
-        
-        foreach (Vector3 pos in neighbours) {
-            BaseTile tile = GetGenericTileAtPosition(pos);
-            if (tile != null && tile.GetTileIndex() == typeIndex) {
-                correctType.Add(pos);
-            }
-        }
-        //Debug.Log("Neighbours of type " + typeIndex + " found " + correctType.Count);
-
-        if (correctType.Count == 0) {
-            return new Vector3(-1000f,-1000f,-1000f);
-        }
-        
-        Vector3 randPos = correctType[Random.Range(0,correctType.Count-1)];
-        
-        return randPos;
-    }
-
-    public void ChangeTileAtPosition(Vector3 position, string newTileIndex) {
+    public BaseTile ChangeTileAtCell(Vector3Int cell, string newTileIndex, bool skipActivate = false) {
         //Debug.Log("Changing tile to " + newTileIndex);
-        BaseTile oldTile = GetTileAtPositionByList(position);
+        BaseTile oldTile = GetTileAtPositionByList(cell);
         
         if (oldTile != null) {
-            Debug.Log("destroying old tile");
+            _tiles.Remove(oldTile);
+            //Debug.Log("destroying old tile");
             Destroy(oldTile.gameObject);    
         }
 
         if (newTileIndex != "destroy") {
             GameObject prefab = GetTilePrefab(newTileIndex);
             GameObject newGO = Instantiate(prefab, _tileParent);
-            newGO.transform.SetPositionAndRotation(position, quaternion.identity);
+            newGO.transform.SetPositionAndRotation(_grid.GetCellCenterWorld(cell), quaternion.identity);
             BaseTile newTile = newGO.GetComponent<BaseTile>();
             newTile.Init(this, _turnHandler, _playerHandler);
-            newTile.Activate();
-        }
-    }
+            if (skipActivate == false) {
+                newTile.Activate();
+            }
 
-    public void ChangeTileAtCell(Vector3Int cell, string newTileIndex) {
-        Vector3 position = _grid.GetCellCenterWorld(cell);
-        ChangeTileAtPosition(position,newTileIndex);
+            _tiles.Add(newTile);
+            return newTile;
+        }
+
+        return null;
     }
 
     private void BuildTilePrefabDictionary() {
@@ -305,9 +199,9 @@ public class TileChangeHandler : MonoBehaviour {
 
 
     private void GenerateLevel() {
-        List<Vector3Int> waterStarts = new List<Vector3Int>();
-        List<Vector3Int> waterTiles = new List<Vector3Int>();
-        List<Vector3Int> mountainTiles = new List<Vector3Int>();
+        List<BaseTile> waterStarts = new List<BaseTile>();
+        List<BaseTile> waterTiles = new List<BaseTile>();
+        List<BaseTile> mountainTiles = new List<BaseTile>();
         
         //Basic generation
         List<String> pool = new List<string>();
@@ -327,12 +221,13 @@ public class TileChangeHandler : MonoBehaviour {
             for (int y = bounds.yMin; y < bounds.yMax; y++) {
                 string randomType = pool[Random.Range(0, pool.Count)];
                 Vector3Int newCell = new Vector3Int(x, y, 0);
-                ChangeTileAtCell(newCell,randomType);
+                BaseTile tile = ChangeTileAtCell(newCell,randomType,true);
+                //Debug.Log("Made new "+ tile.indexName +" at cell " + tile.cellPosition);
                 if (randomType == "water") {
-                    waterStarts.Add(newCell);
+                    waterStarts.Add(tile);
                 }
                 if (randomType == "mountain") {
-                    mountainTiles.Add(newCell);
+                    mountainTiles.Add(tile);
                 }
             }
         }
@@ -347,8 +242,15 @@ public class TileChangeHandler : MonoBehaviour {
         ApplyMoisture(waterTiles.ToArray());
         
         //Forest spreading
+        
+        ActivateAllTiles();
     }
 
+    private void ActivateAllTiles() {
+        foreach (BaseTile tile in _tiles) {
+            tile.Activate();
+        }
+    }
     private void FlowWater(Vector3Int cell, int stepsRemaining) {
         string[] allowedDestinations = {"desert","grass"};
     }
@@ -364,10 +266,15 @@ public class TileChangeHandler : MonoBehaviour {
         }
     }
     
-    private void ApplyHills(Vector3Int[] cells) {
-        Debug.Log(cells.Length);
-        foreach (Vector3Int cell in cells) {
-            ChangeTileAtCell(cell,"destroy");
+    private void ApplyHills(BaseTile[] tiles) {
+        foreach (BaseTile mountainTile in tiles) {
+            BaseTile[] neighbours = GetNeighbourTiles(mountainTile);
+            foreach (BaseTile tile in neighbours) {
+                if (IsOfWantedType(tile,new []{"grass","desert"}))
+                {
+                    ChangeTileAtCell(tile.cellPosition, "hill",true);
+                }
+            }
         }
         
     }

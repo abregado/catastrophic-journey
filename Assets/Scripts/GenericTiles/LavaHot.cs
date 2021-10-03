@@ -7,29 +7,22 @@ public class LavaHot: BaseTile {
     private string[] effectingTypes = {
         "grass",
         "desert",
-        "locust-swarm",
-        "lava-cold"
+        "locust-swarm"
     };
     public override void Activate() {
-        CenterTile();
+
+        _turnHandler.AddEvent(3, cellPosition, "lava-cold");
+        BaseTile randTile = _changeHandler.GetRandomNeighbourTileOfTypes(this, effectingTypes);
         
-        _turnHandler.AddEvent(5, transform.position, "lava-cold");
-        Vector3 randPos = _changeHandler.GetNeighbourPositionOfTypes(transform.position, effectingTypes);
         
-        if (randPos.x == -1000f) {
-            Debug.Log("lava had no suitable neighbours");
+        if (randTile != null && Random.Range(0,100)<50) {
+            _turnHandler.AddEvent(1, randTile.cellPosition, "lava-hot");
             return;
         }
-
-        if (_changeHandler.GetGenericTileAtPosition(randPos).indexName == "lava-cold") {
-            //spawn an extra hot lava here
-            _turnHandler.AddEvent(2, randPos, "lava-hot");    
+        
+        randTile = _changeHandler.GetRandomNeighbourTileOfTypes(this, new [] {"lava-cold"});
+        if (randTile != null && Random.Range(0,100)<15) {
+            _turnHandler.AddEvent(1, randTile.cellPosition, "lava-hot");
         }
-        else {
-            if (Random.Range(0, 100) < 80) {
-                _turnHandler.AddEvent(2, randPos, "lava-hot");
-            }
-        }
-
     }
 }
