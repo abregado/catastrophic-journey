@@ -48,7 +48,7 @@ MonoBehaviour:
   indexName: mountain
   isDisaster: 0
   isWalkable: 0
-  generatedWeight: 3
+  generatedWeight: 2
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &1547786199161728063
 MeshCollider:

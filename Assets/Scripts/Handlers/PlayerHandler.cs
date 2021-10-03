@@ -13,7 +13,7 @@ public class PlayerHandler : MonoBehaviour
     private Vector3 camOffset;
     private TurnHandler _turnHandler;
     
-    public void init(Grid grid, Transform playerObj, Transform cameraTrans, TurnHandler turnHandler)
+    public void Init(Grid grid, Transform playerObj, Transform cameraTrans, TurnHandler turnHandler)
     {
         _grid = grid;
         _playerObj = playerObj;
@@ -22,20 +22,12 @@ public class PlayerHandler : MonoBehaviour
         camOffset = _cameraTrans.position - _playerObj.position;
     }
     
-    
     //set ref to tile we are mousing over
     public void SetMousedTile(GameObject inputTile)
     {
         mousedOverTile = inputTile;
     }
     
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     { 
@@ -45,17 +37,17 @@ public class PlayerHandler : MonoBehaviour
             //Debug.Log("Moused Over Tile: " + mousedOverTile.name);
             //Debug.Log("Position: " + tilePos);
             gridPos = _grid.GetComponent<TileChangeHandler>().GetTileGridCoordinate(tilePos);
-            Debug.Log("Grid Position: " + gridPos);
+            //Debug.Log("Grid Position: " + gridPos);
             if(Input.GetMouseButtonDown(0))
             {
-            _playerObj.position = tilePos;
-            Debug.Log(mousedOverTile.GetComponent<BaseTile>().indexName);
-            //tilePos.x = tilePos.x - 0.62303f;
-            //tilePos.z = tilePos.z + 2.224154f;
-            //tilePos.y = 3.881368f;
-            //Debug.Log("Camera POS: " + tilePos);
-            _cameraTrans.position = tilePos + camOffset;
-            _turnHandler.DoTurn();
+                _playerObj.position = tilePos;
+                //Debug.Log(mousedOverTile.GetComponent<BaseTile>().indexName);
+                //tilePos.x = tilePos.x - 0.62303f;
+                //tilePos.z = tilePos.z + 2.224154f;
+                //tilePos.y = 3.881368f;
+                //Debug.Log("Camera POS: " + tilePos);
+                _cameraTrans.position = tilePos + camOffset;
+                _turnHandler.DoTurn();
             }
         }
         mousedOverTile = null;

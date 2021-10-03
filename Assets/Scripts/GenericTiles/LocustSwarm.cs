@@ -3,7 +3,7 @@
 public class LocustSwarm: BaseTile {
     public override void Activate() {
         
-        _turnHandler.AddEvent(3, cellPosition, "desert");
+        _turnHandler.AddEvent(3, cellPosition, "desert",true);
         BaseTile randTile = _changeHandler.GetRandomNeighbourTileOfTypes(this, new []{"grass"});
         
         if (randTile != null) {

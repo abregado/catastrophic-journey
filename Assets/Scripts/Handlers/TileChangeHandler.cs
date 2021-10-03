@@ -27,19 +27,20 @@ public class TileChangeHandler : MonoBehaviour {
     private List<BaseTile> _tiles;
 
     void Start() {
+        BuildTilePrefabDictionary();
+        
         _grid = GetComponent<Grid>();
         _tilemap = transform.Find("Tilemap").transform.GetComponent<Tilemap>();
         _tiles = new List<BaseTile>();
         
         _playerObj = GameObject.Find("PlayerObj").GetComponent<Transform>();
-        _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref ro playerhandler
-        _playerHandler.init(_grid, _playerObj, _cameraTrans, _turnHandler); //pass ref to grid to playerhandler
-
-        BuildTilePrefabDictionary();
-        
+        _cameraTrans = Camera.main.transform;
         _turnHandler = FindObjectOfType<TurnHandler>();
         _turnHandler.Init(this);
         
+        _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref ro playerhandler
+        _playerHandler.Init(_grid, _playerObj, _cameraTrans, _turnHandler); //pass ref to grid to playerhandler
+
         GenerateLevel();
     }
 
@@ -238,8 +239,8 @@ public class TileChangeHandler : MonoBehaviour {
         //Water worming
         
         
-        ApplyMoisture(waterStarts.ToArray());
-        ApplyMoisture(waterTiles.ToArray());
+        //ApplyMoisture(waterStarts.ToArray());
+        //ApplyMoisture(waterTiles.ToArray());
         
         //Forest spreading
         
@@ -256,14 +257,7 @@ public class TileChangeHandler : MonoBehaviour {
     }
     
     private void ApplyMoisture(Vector3Int[] cells) {
-        foreach (Vector3Int cell in cells) {
-            string[] allowedDestinations = {"desert"};
-            Vector3Int[] neighbours = GetAllNeighbourCellsOfTypes(cell, allowedDestinations);
 
-            foreach (Vector3Int ncell in neighbours) {
-                ChangeTileAtCell(ncell, "grass");
-            }
-        }
     }
     
     private void ApplyHills(BaseTile[] tiles) {

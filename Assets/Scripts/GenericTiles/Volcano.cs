@@ -27,11 +27,12 @@ public class Volcano: BaseTile {
 
         if (Random.Range(0, 100) < 11) {
             //volcano stops erupting
+            _particles.Stop();
             return;
         }
         
         _particles.Play();
-        _turnHandler.AddEvent(Random.Range(3, 7), cellPosition, "volcano");
+        _turnHandler.AddEvent(Random.Range(3, 7), cellPosition, "volcano",true);
         BaseTile[] neighbours = _changeHandler.GetAllNeighbourTilesOfTypes(this, effectingTypes);
         
         if (neighbours.Length == 0) {

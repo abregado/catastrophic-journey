@@ -11,7 +11,7 @@ public class LavaHot: BaseTile {
     };
     public override void Activate() {
 
-        _turnHandler.AddEvent(3, cellPosition, "lava-cold");
+        _turnHandler.AddEvent(3, cellPosition, "lava-cold",true);
         BaseTile randTile = _changeHandler.GetRandomNeighbourTileOfTypes(this, effectingTypes);
         
         

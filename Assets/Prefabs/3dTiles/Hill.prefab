@@ -48,7 +48,7 @@ MonoBehaviour:
   indexName: hill
   isDisaster: 0
   isWalkable: 1
-  generatedWeight: 3
+  generatedWeight: 1
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &3728716466606353869
 MeshCollider:

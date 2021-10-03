@@ -47,7 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexName: water
   isDisaster: 0
-  generatedWeight: 4
+  isWalkable: 0
+  generatedWeight: 5
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &2841402919739901046
 MeshCollider:
