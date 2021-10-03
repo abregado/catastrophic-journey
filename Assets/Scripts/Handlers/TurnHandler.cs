@@ -17,10 +17,9 @@ public class TurnHandler: MonoBehaviour {
         
         _turnEvents = new List<TurnEvent>();
         
-        StartGame();
     }
 
-    private void StartGame() {
+    public void StartGame() {
         _turnCount = 0;
         ClearEvents();
     }

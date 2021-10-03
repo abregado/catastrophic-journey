@@ -39,19 +39,18 @@ public class TileChangeHandler : MonoBehaviour {
         _cameraTrans = Camera.main.transform;
         _turnHandler = FindObjectOfType<TurnHandler>();
         _turnHandler.Init(this);
-        
+
         _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref ro playerhandler
-        _playerHandler.Init(_grid, _playerObj, _cameraTrans, _turnHandler, _selectionTilemap); //pass ref to grid to playerhandler
+        _playerHandler.Init(_grid, _playerObj, _cameraTrans, _turnHandler, _selectionTilemap, this); //pass ref to grid to playerhandler
 
         GenerateLevel();
         
-        //test section tilemap
-        BaseTile playerTile = GetTileAtPositionByList(_playerObj.transform.position);
-        BaseTile[] walkable = FloodFillWalkable(playerTile, 1);
-        _selectionTilemap.ClearAllTiles();
-        foreach (BaseTile tile in walkable) {
-            _selectionTilemap.SetTile(tile.cellPosition,resources.selectionTile);
-        }
+        StartGame();
+    }
+
+    public void StartGame() {
+        _turnHandler.StartGame();
+        _playerHandler.StartGame();
     }
 
     public Vector3 GetTileCentreAtCell(Vector3Int cell) {

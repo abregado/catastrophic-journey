@@ -45,6 +45,6 @@ public class BaseTile: MonoBehaviour {
     //prints name of object mouse is over
     void OnMouseOver()
     {
-        _playerHandler.SetMousedTile(gameObject);
+        _playerHandler.SetMousedTile(this);
     }
 }
