@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerHandler : MonoBehaviour
 {
@@ -12,13 +13,15 @@ public class PlayerHandler : MonoBehaviour
     private Transform _cameraTrans;
     private Vector3 camOffset;
     private TurnHandler _turnHandler;
+    private Tilemap _selectionTilemap;
     
-    public void Init(Grid grid, Transform playerObj, Transform cameraTrans, TurnHandler turnHandler)
+    public void Init(Grid grid, Transform playerObj, Transform cameraTrans, TurnHandler turnHandler,Tilemap selectionTilemap)
     {
         _grid = grid;
         _playerObj = playerObj;
         _cameraTrans = cameraTrans;
         _turnHandler = turnHandler;
+        _selectionTilemap = selectionTilemap;
         camOffset = _cameraTrans.position - _playerObj.position;
     }
     

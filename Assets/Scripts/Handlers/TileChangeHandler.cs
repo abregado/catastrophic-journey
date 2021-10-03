@@ -13,6 +13,7 @@ using Vector3 = UnityEngine.Vector3;
 public class TileChangeHandler : MonoBehaviour {
     private Grid _grid;
     private Tilemap _tilemap;
+    private Tilemap _selectionTilemap;
     private TurnHandler _turnHandler;
     private PlayerHandler _playerHandler;
     private Transform _playerObj;
@@ -31,6 +32,7 @@ public class TileChangeHandler : MonoBehaviour {
         
         _grid = GetComponent<Grid>();
         _tilemap = transform.Find("Tilemap").transform.GetComponent<Tilemap>();
+        _selectionTilemap = transform.Find("SelectionTilemap").transform.GetComponent<Tilemap>();
         _tiles = new List<BaseTile>();
         
         _playerObj = GameObject.Find("PlayerObj").GetComponent<Transform>();
@@ -39,9 +41,17 @@ public class TileChangeHandler : MonoBehaviour {
         _turnHandler.Init(this);
         
         _playerHandler = FindObjectOfType<PlayerHandler>(); //get ref ro playerhandler
-        _playerHandler.Init(_grid, _playerObj, _cameraTrans, _turnHandler); //pass ref to grid to playerhandler
+        _playerHandler.Init(_grid, _playerObj, _cameraTrans, _turnHandler, _selectionTilemap); //pass ref to grid to playerhandler
 
         GenerateLevel();
+        
+        //test section tilemap
+        BaseTile playerTile = GetTileAtPositionByList(_playerObj.transform.position);
+        BaseTile[] walkable = FloodFillWalkable(playerTile, 1);
+        _selectionTilemap.ClearAllTiles();
+        foreach (BaseTile tile in walkable) {
+            _selectionTilemap.SetTile(tile.cellPosition,resources.selectionTile);
+        }
     }
 
     public Vector3 GetTileCentreAtCell(Vector3Int cell) {
@@ -64,13 +74,8 @@ public class TileChangeHandler : MonoBehaviour {
         return null;
     }
     
-    public BaseTile GetTileAtPositionByList(Vector3Int cell) {
-        foreach (BaseTile tile in _tiles) {
-            if (tile.cellPosition == cell) {
-                return tile;
-            }
-        }
-        return null;
+    public BaseTile GetTileAtPositionByList(Vector3 pos) {
+        return GetTileAtCellByList(_tilemap.WorldToCell(pos));
     }
     public Vector3 GetTileGridCoordinate(Vector3 position) {
         Vector3Int cell = _grid.WorldToCell(position);
@@ -149,9 +154,35 @@ public class TileChangeHandler : MonoBehaviour {
         return correctType.ToArray();
     }
 
+    public BaseTile[] FloodFillWalkable(BaseTile start, int steps) {
+        Dictionary<Vector3Int, BaseTile> filled = new Dictionary<Vector3Int, BaseTile>();
+
+        filled = WalkableStep(filled, start, steps);
+
+        List<BaseTile> finishedList = new List<BaseTile>();
+        foreach (var pair in filled) {
+            finishedList.Add(pair.Value);
+        }
+
+        return finishedList.ToArray();
+    }
+
+    private Dictionary<Vector3Int, BaseTile> WalkableStep(Dictionary<Vector3Int, BaseTile> dictionary, BaseTile start, int stepsRemaining) {
+        BaseTile[] neighbours = GetNeighbourTiles(start);
+        foreach (BaseTile ntile in neighbours) {
+            if (ntile.isWalkable && dictionary.ContainsKey(ntile.cellPosition)==false) {
+                dictionary.Add(ntile.cellPosition,ntile);
+                if (stepsRemaining > 0) {
+                    dictionary = WalkableStep(dictionary, ntile, stepsRemaining - 1);
+                }
+            }
+        }
+        return dictionary;
+    }
+
     public BaseTile ChangeTileAtCell(Vector3Int cell, string newTileIndex, bool skipActivate = false) {
         //Debug.Log("Changing tile to " + newTileIndex);
-        BaseTile oldTile = GetTileAtPositionByList(cell);
+        BaseTile oldTile = GetTileAtCellByList(cell);
         
         if (oldTile != null) {
             _tiles.Remove(oldTile);
