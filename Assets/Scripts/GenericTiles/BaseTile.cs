@@ -55,7 +55,7 @@ public class BaseTile: MonoBehaviour {
 
     public void PlaySound(string soundType) {
         if (soundType == indexName + "-appear") {
-            audioSource.volume = 0.1f;
+            audioSource.volume = 0.4f;
             audioSource.maxDistance = 5f;
             audioSource.Play();
         }

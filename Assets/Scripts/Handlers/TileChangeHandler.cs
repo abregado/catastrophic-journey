@@ -231,11 +231,11 @@ public class TileChangeHandler : MonoBehaviour {
     public BaseTile ChangeTileAtCell(Vector3Int cell, string newTileIndex, bool skipActivate = false) {
         //Debug.Log("Changing tile to " + newTileIndex);
         BaseTile oldTile = GetTileAtCellByList(cell);
-        if (oldTile.indexName == "rocket") {
-            return null;
-        }
-        
+
         if (oldTile != null) {
+            if (oldTile.indexName == "rocket") {
+                return null;
+            }
             _tiles.Remove(oldTile);
             //Debug.Log("destroying old tile");
             Destroy(oldTile.gameObject);    
