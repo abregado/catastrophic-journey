@@ -19,6 +19,7 @@ public class PlayerHandler : MonoBehaviour
     private BaseTile[] _selectableTiles;
     private TileChangeHandler _changeHandler;
     private Transform _lifeBar;
+    private Rocket _rocket;
 
     private const int PLAYER_SPEED = 5; 
     
@@ -79,6 +80,15 @@ public class PlayerHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //check for win
+        if (_changeHandler.GetCellAtPosition(_playerObj.position) == new Vector3Int(-238,3,0))
+        {
+            _rocket = FindObjectOfType<Rocket>();
+            _rocket.LaunchRocket();
+            _playerObj.gameObject.SetActive(false);
+        }
+        
+        
         if (Input.GetKeyDown(KeyCode.R)) {
             _changeHandler.RestartGame();
             _playerObj.position = Vector3.zero;
