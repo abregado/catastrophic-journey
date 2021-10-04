@@ -49,9 +49,10 @@ MonoBehaviour:
   indexName: quake
   isWalkable: 0
   generatedWeight: 0
-  disasterWeight: 1
+  disasterWeight: 2
   moveCost: 1
   audioSource: {fileID: 0}
+  healthChange: -1
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &1547786199161728063
 MeshCollider:

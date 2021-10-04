@@ -11,6 +11,7 @@ public class BaseTile: MonoBehaviour {
     public int disasterWeight = 0;
     public int moveCost = 1;
     public AudioSource audioSource;
+    public int healthChange = 0;
 
     public Vector3Int cellPosition;
     

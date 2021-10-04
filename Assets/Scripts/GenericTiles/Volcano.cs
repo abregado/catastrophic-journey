@@ -11,6 +11,7 @@ public class Volcano: BaseTile {
         "forest",
         "desert",
         "locust-swarm",
+        "town",
     };
 
     private DOTweenAnimation _animation;

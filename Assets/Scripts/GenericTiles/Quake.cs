@@ -4,33 +4,13 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Quake: BaseTile {
-    private string[] effectingTypes = {
-        "grass",
-        "water",
-        "forest",
-        "desert",
-        "locust-swarm",
-    };
-    private BaseTile[] neighbours;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public override void Activate() {
         base.Activate();
         
         BaseTile neighbour = _changeHandler.GetRandomNeighbourTileExcludingTypes(this, new string[]{"quake"});
         _turnHandler.AddEvent(1, this.cellPosition, "destroy", true);
         
-        if (neighbour != null)
+        if (neighbour != null && Random.Range(0,100)<90)
         {
             //neighbour.transform.position = neighbour.transform.position + new Vector3(0f,0f,-100f);
             //tile.isWalkable = false;

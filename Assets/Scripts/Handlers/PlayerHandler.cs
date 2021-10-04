@@ -20,6 +20,7 @@ public class PlayerHandler : MonoBehaviour
     private TileChangeHandler _changeHandler;
     private Transform _lifeBar;
     private Rocket _rocket;
+    private int _health = 5;
 
     private const int PLAYER_SPEED = 5; 
     
@@ -46,6 +47,8 @@ public class PlayerHandler : MonoBehaviour
 
     public void StartGame() {
         UpdateWalkableSelectionArea();
+        _health = 5;
+        UpdateLifeBar();
     }
 
     private void UpdateWalkableSelectionArea() {
@@ -76,12 +79,48 @@ public class PlayerHandler : MonoBehaviour
 
         return false;
     }
+
+    public void Damage() {
+        _health--;
+        UpdateLifeBar();
+        if (_health == 0) {
+            _changeHandler.RestartGame();
+        }
+    }
+
+    private void Heal() {
+        if (_health < 5) {
+            _health = 5;
+            UpdateLifeBar();
+        }
+    }
+
+    private void UpdateLifeBar() {
+        for(int i = 0;i<5;i++)
+        {
+            _lifeBar.GetChild(i).gameObject.SetActive(i<_health);
+        }
+    }
     
-    // Update is called once per frame
-    void Update()
-    {
+    public void DoPlayerTileChecks() {
+
+        BaseTile playerTile = _changeHandler.GetTileAtPositionByList(_playerObj.position);
+        if (playerTile == null) {
+            Damage();
+            return;
+        }
+        
+        if (playerTile.healthChange > 0 || playerTile.indexName == "town") {
+            Heal();
+        }
+        
+        if (playerTile.healthChange < 0) {
+            Damage();
+        }
+        
+        
         //transform into boat
-        if (_changeHandler.GetTileAtPositionByList(_playerObj.position).indexName == "water")
+        if (playerTile.indexName == "water")
         {
             _playerObj.transform.Find("astronautA").gameObject.SetActive(false);
             _playerObj.transform.Find("ship_light").gameObject.SetActive(true);
@@ -93,21 +132,36 @@ public class PlayerHandler : MonoBehaviour
         }
         
         //check for win
-        if (_changeHandler.GetCellAtPosition(_playerObj.position) == new Vector3Int(-238,3,0))
+        if (playerTile.cellPosition == new Vector3Int(-238,3,0))
         {
             _rocket = FindObjectOfType<Rocket>();
             _rocket.LaunchRocket();
             //_playerObj.gameObject.SetActive(false);
             _playerObj.gameObject.transform.Find("astronautA").gameObject.SetActive(false);
         }
-        
-        
+    }
+    
+    // Update is called once per frame
+    void Update()
+    {
         if (Input.GetKeyDown(KeyCode.R)) {
             _changeHandler.RestartGame();
             _playerObj.position = Vector3.zero;
         }
         
+        if (Input.GetKeyDown(KeyCode.K)) {
+            Damage();
+        }
+        if (Input.GetKeyDown(KeyCode.L)) {
+            Heal();
+        }
+        
         if (Input.GetMouseButtonDown(0) && _selectableTiles.Length == 0) {
+            _changeHandler.RestartGame();
+            return;
+        }
+        
+        if (Input.GetMouseButtonDown(0) && _health < 1) {
             _changeHandler.RestartGame();
             return;
         }

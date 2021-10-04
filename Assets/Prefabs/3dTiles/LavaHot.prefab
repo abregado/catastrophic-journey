@@ -52,6 +52,7 @@ MonoBehaviour:
   disasterWeight: 0
   moveCost: 1
   audioSource: {fileID: 0}
+  healthChange: -1
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &2972083536964428596
 MeshCollider:

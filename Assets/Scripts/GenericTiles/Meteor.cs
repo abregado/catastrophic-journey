@@ -15,7 +15,8 @@ public class Meteor: BaseTile {
         "mountain",
         "hill",
         "crater-dirt",
-        "volcano"
+        "volcano",
+        "town"
     };
 
     private DOTweenAnimation _animation;
@@ -32,7 +33,13 @@ public class Meteor: BaseTile {
     public override void Activate() {
         base.Activate();
         _particles.Play();
-
+        
+        
+        BaseTile playerTile = _playerHandler.GetPlayerTile();
+        if (playerTile != null && playerTile == this) {
+            _playerHandler.Damage();
+        }
+        
         List<BaseTile> effected = new List<BaseTile>();
         effected.Add(this);
         
@@ -40,6 +47,9 @@ public class Meteor: BaseTile {
         foreach (BaseTile tile in neighbours) {
             _turnHandler.AddEvent(1, tile.cellPosition, "crater-dirt");
             effected.Add(tile);
+            if (tile == playerTile) {
+                _playerHandler.Damage();
+            }
         }
         
         foreach (BaseTile tile in neighbours) {

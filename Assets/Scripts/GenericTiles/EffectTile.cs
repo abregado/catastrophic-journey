@@ -17,5 +17,12 @@ public class EffectTile: BaseTile {
     public override void Activate() {
         base.Activate();
         _particles.Play();
+
+        if (indexName == "crater-dirt") {
+            BaseTile playerTile = _playerHandler.GetPlayerTile();
+            if (playerTile != null && playerTile.cellPosition == cellPosition) {
+                _playerHandler.Damage();
+            }
+        }
     }
 }

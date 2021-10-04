@@ -5,7 +5,7 @@ public class LocustSwarm: BaseTile {
         base.Activate();
         
         _turnHandler.AddEvent(3, cellPosition, "desert",true);
-        BaseTile randTile = _changeHandler.GetRandomNeighbourTileOfTypes(this, new []{"grass"});
+        BaseTile randTile = _changeHandler.GetRandomNeighbourTileOfTypes(this, new []{"grass","town"});
         
         if (randTile != null) {
             _turnHandler.AddEvent(3, randTile.cellPosition, "locust-swarm");    

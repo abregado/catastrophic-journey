@@ -47,9 +47,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indexName: forest
   isWalkable: 1
-  generatedWeight: 3
+  generatedWeight: 6
   disasterWeight: 0
   moveCost: 2
+  audioSource: {fileID: 0}
+  healthChange: 0
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &8326688456267894745
 MeshCollider:

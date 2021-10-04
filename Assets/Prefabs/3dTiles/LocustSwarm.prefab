@@ -54,6 +54,7 @@ MonoBehaviour:
   disasterWeight: 3
   moveCost: 1
   audioSource: {fileID: 0}
+  healthChange: -1
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &8818036685581616569
 MeshCollider:
@@ -79,7 +80,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2003f536715399242b62a1745c1bfd9b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 35694db88b7324d48928af5d7fc9f73e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1

@@ -356,7 +356,7 @@ public class TileChangeHandler : MonoBehaviour {
 
     private void GrowForests(BaseTile[] forestTiles) {
         foreach (BaseTile tile in forestTiles) {
-            SpreadTrees(tile,9);
+            SpreadTrees(tile,4);
         }
     }
     

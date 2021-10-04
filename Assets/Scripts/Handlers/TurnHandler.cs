@@ -65,6 +65,8 @@ public class TurnHandler: MonoBehaviour {
                 _turnEvents.RemoveAt(i);
             }
         }
+        
+        _player.DoPlayerTileChecks();
     }
 
     private void GenerateNewDisasters() {
