@@ -193,28 +193,32 @@ public class TileChangeHandler : MonoBehaviour {
     }
 
     public BaseTile[] FloodFillWalkable(BaseTile start, int steps) {
-        Dictionary<Vector3Int, BaseTile> filled = new Dictionary<Vector3Int, BaseTile>();
+        Dictionary<Vector3Int, int> filled = new Dictionary<Vector3Int, int>();
 
         filled = WalkableStep(filled, start, steps);
 
         List<BaseTile> finishedList = new List<BaseTile>();
         foreach (var pair in filled) {
-            finishedList.Add(pair.Value);
+            finishedList.Add(GetTileAtCellByList(pair.Key));
         }
 
         return finishedList.ToArray();
     }
 
-    private Dictionary<Vector3Int, BaseTile> WalkableStep(Dictionary<Vector3Int, BaseTile> dictionary, BaseTile start, int stepsRemaining) {
+    private Dictionary<Vector3Int, int> WalkableStep(Dictionary<Vector3Int, int> dictionary, BaseTile start, int stepsRemaining) {
+        
         BaseTile[] neighbours = GetNeighbourTiles(start);
         foreach (BaseTile ntile in neighbours) {
-            if (ntile.isWalkable && dictionary.ContainsKey(ntile.cellPosition)==false) {
-                dictionary.Add(ntile.cellPosition,ntile);
-                if (stepsRemaining > 0) {
-                    dictionary = WalkableStep(dictionary, ntile, stepsRemaining - 1);
+            if (ntile.isWalkable && stepsRemaining - ntile.moveCost > 0) {
+                if (dictionary.ContainsKey(ntile.cellPosition) == false) {
+                    dictionary.Add(ntile.cellPosition, stepsRemaining - ntile.moveCost);
+                    if (stepsRemaining > -1) {
+                        dictionary = WalkableStep(dictionary, ntile, stepsRemaining - ntile.moveCost);
+                    }
                 }
             }
         }
+
         return dictionary;
     }
 

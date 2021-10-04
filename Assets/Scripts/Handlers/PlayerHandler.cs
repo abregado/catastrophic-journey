@@ -19,7 +19,7 @@ public class PlayerHandler : MonoBehaviour
     private TileChangeHandler _changeHandler;
     private Transform _lifeBar;
 
-    private const int PLAYER_SPEED = 2; 
+    private const int PLAYER_SPEED = 8; 
     
     public void Init(Grid grid, Transform playerObj, Transform cameraTrans, TurnHandler turnHandler,Tilemap selectionTilemap, TileChangeHandler changeHandler, Transform lifeBar)
     {
