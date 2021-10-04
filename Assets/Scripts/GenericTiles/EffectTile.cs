@@ -15,6 +15,7 @@ public class EffectTile: BaseTile {
     }
 
     public override void Activate() {
+        base.Activate();
         _particles.Play();
     }
 }

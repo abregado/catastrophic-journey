@@ -25,6 +25,8 @@ public class Quake: BaseTile {
     }
 
     public override void Activate() {
+        base.Activate();
+        
         BaseTile neighbour = _changeHandler.GetRandomNeighbourTileExcludingTypes(this, new string[]{"quake"});
         _turnHandler.AddEvent(1, this.cellPosition, "destroy", true);
         

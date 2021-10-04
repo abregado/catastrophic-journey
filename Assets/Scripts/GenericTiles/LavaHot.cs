@@ -19,6 +19,7 @@ public class LavaHot: BaseTile {
     
     
     public override void Activate() {
+        base.Activate();
 
         _particles.Play();
         _turnHandler.AddEvent(3, cellPosition, "lava-cold",true);

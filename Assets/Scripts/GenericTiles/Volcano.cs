@@ -25,6 +25,7 @@ public class Volcano: BaseTile {
     }
 
     public override void Activate() {
+        base.Activate();
 
         if (Random.Range(0, 100) < 5) {
             //volcano stops erupting

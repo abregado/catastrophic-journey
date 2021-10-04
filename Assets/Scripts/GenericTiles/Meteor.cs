@@ -30,6 +30,7 @@ public class Meteor: BaseTile {
     }
 
     public override void Activate() {
+        base.Activate();
         _particles.Play();
 
         List<BaseTile> effected = new List<BaseTile>();

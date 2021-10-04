@@ -5113,7 +5113,7 @@ MonoBehaviour:
   generatedWeight: 0
   disasterWeight: 1
   moveCost: 1
-  appearSound: {fileID: 0}
+  audioSource: {fileID: 0}
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &232129110125580418
 MeshCollider:
@@ -5140,8 +5140,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 52c013cffbbb31d4ab746a9977a9d63a, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

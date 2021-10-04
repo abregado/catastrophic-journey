@@ -436,5 +436,11 @@ public class TileChangeHandler : MonoBehaviour {
 
         return disasters[Random.Range(0, disasters.Count - 1)];
     }
+
+    public void StopAllTileSounds() {
+        foreach (BaseTile tile in _tiles) {
+            tile.StopSound();
+        }
+    }
 }
 

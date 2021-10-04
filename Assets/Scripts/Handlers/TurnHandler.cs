@@ -10,16 +10,17 @@ public class TurnHandler: MonoBehaviour {
     
     public int _turnCount;
     public bool _gameRunning = true;
-
+    
     private List<TurnEvent> _turnEvents;
+    private Dictionary<string, BaseTile> _queuedSounds;
     
     public void Init(TileChangeHandler changer, PlayerHandler player) {
         _changeHandler = changer;
         _player = player;
         _turnEvents = new List<TurnEvent>();
-        
+        _queuedSounds = new Dictionary<string, BaseTile>();
     }
-
+    
     public void StartGame() {
         _turnCount = 0;
         ClearEvents();
@@ -30,11 +31,13 @@ public class TurnHandler: MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space) && _gameRunning) {
-            DoTurn();    
-        }
-        if (Input.GetKeyDown(KeyCode.P)) {
-            _gameRunning = !_gameRunning;
+        if (Mathf.Floor(Time.time * 10f) % 2 == 0) {
+            var keys = _queuedSounds.Keys;
+            var list = _queuedSounds.ToArray();
+            if (list.Length > 0) {
+                list[0].Value.PlaySound(list[0].Key);
+                _queuedSounds.Remove(list[0].Key);
+            }
         }
     }
 
@@ -46,6 +49,9 @@ public class TurnHandler: MonoBehaviour {
     }
 
     private void ProcessEventStack() {
+        _changeHandler.StopAllTileSounds();
+        _queuedSounds.Clear();
+        
         if (_turnEvents.Count == 0) {
             return;
         }
@@ -57,7 +63,6 @@ public class TurnHandler: MonoBehaviour {
                 _turnEvents.RemoveAt(i);
             }
         }
-        
     }
 
     private void GenerateNewDisasters() {
@@ -89,6 +94,12 @@ public class TurnHandler: MonoBehaviour {
         }
 
         return false;
+    }
+
+    public void QueueSound(string soundType, BaseTile tile) {
+        if (_queuedSounds.ContainsKey(soundType) == false) {
+            _queuedSounds.Add(soundType,tile);
+        }
     }
     
 }

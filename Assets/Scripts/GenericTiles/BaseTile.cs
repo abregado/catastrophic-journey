@@ -10,6 +10,7 @@ public class BaseTile: MonoBehaviour {
     public int generatedWeight = 0;
     public int disasterWeight = 0;
     public int moveCost = 1;
+    public AudioSource audioSource;
 
     public Vector3Int cellPosition;
     
@@ -17,12 +18,15 @@ public class BaseTile: MonoBehaviour {
         _changeHandler = changer;
         _turnHandler = turner;
         _playerHandler = player;
+        audioSource = GetComponent<AudioSource>();
         
         OnTileCreated();
     }
 
     public virtual void Activate() {
-
+        if (audioSource != null) {
+            _turnHandler.QueueSound(indexName+"-appear",this);
+        }
     }
     
     protected void CenterTile() {
@@ -47,5 +51,19 @@ public class BaseTile: MonoBehaviour {
     void OnMouseOver()
     {
         _playerHandler.SetMousedTile(this);
+    }
+
+    public void PlaySound(string soundType) {
+        if (soundType == indexName + "-appear") {
+            audioSource.volume = 0.1f;
+            audioSource.maxDistance = 5f;
+            audioSource.Play();
+        }
+    }
+
+    public void StopSound() {
+        if (audioSource != null) {
+            audioSource.Stop();
+        }
     }
 }
