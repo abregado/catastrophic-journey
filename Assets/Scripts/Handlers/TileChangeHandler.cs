@@ -18,6 +18,7 @@ public class TileChangeHandler : MonoBehaviour {
     private PlayerHandler _playerHandler;
     private Transform _playerObj;
     private Transform _cameraTrans;
+    private Transform _lifeBar;
     public Res resources;
     
     private Dictionary<string, GameObject> _tilePrefabs;
@@ -29,7 +30,7 @@ public class TileChangeHandler : MonoBehaviour {
 
     void Start() {
         BuildTilePrefabDictionary();
-        
+        //Debug.Log(_tilePrefabs);
         _grid = GetComponent<Grid>();
         _tilemap = transform.Find("Tilemap").transform.GetComponent<Tilemap>();
         _selectionTilemap = transform.Find("SelectionTilemap").transform.GetComponent<Tilemap>();
@@ -37,11 +38,12 @@ public class TileChangeHandler : MonoBehaviour {
         _playerObj = GameObject.Find("PlayerObj").GetComponent<Transform>();
         _cameraTrans = Camera.main.transform;
         _turnHandler = FindObjectOfType<TurnHandler>();
-        
+        _lifeBar = GameObject.Find("LifeBar").GetComponent<Transform>();
+        //Debug.Log(_lifeBar.position);
         _tiles = new List<BaseTile>();
         
         _turnHandler.Init(this, _playerHandler);
-        _playerHandler.Init(_grid, _playerObj, _cameraTrans, _turnHandler, _selectionTilemap, this); //pass ref to grid to playerhandler
+        _playerHandler.Init(_grid, _playerObj, _cameraTrans, _turnHandler, _selectionTilemap, this, _lifeBar); //pass ref to grid to playerhandler
 
         GenerateLevel();
         
@@ -131,6 +133,22 @@ public class TileChangeHandler : MonoBehaviour {
         BaseTile randTile = correctType[Random.Range(0,correctType.Length-1)];
         
         return randTile;
+    }
+
+    public BaseTile GetRandomNeighbourTileExcludingTypes(BaseTile centerTile, string[] typeIndexes) {
+        List<string> types = new List<string>();
+        
+        foreach (GameObject prefab in resources.tilePrefabs) {
+            BaseTile tile = prefab.GetComponent<BaseTile>();
+            types.Add(tile.indexName);
+        }
+        foreach (String typestring in typeIndexes)
+        {
+            types.Remove(typestring);
+        }
+
+
+        return GetRandomNeighbourTileOfTypes(centerTile, types.ToArray());
     }
     
     public bool IsOfWantedType(BaseTile tile, string[] wantedTypes) {

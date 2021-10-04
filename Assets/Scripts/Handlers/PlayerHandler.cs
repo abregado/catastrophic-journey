@@ -12,23 +12,28 @@ public class PlayerHandler : MonoBehaviour
     private Transform _playerObj;
     private Transform _cameraTrans;
     private Vector3 camOffset;
+    private Vector3 lifeOffset;
     private TurnHandler _turnHandler;
     private Tilemap _selectionTilemap;
     private BaseTile[] _selectableTiles;
     private TileChangeHandler _changeHandler;
+    private Transform _lifeBar;
 
     private const int PLAYER_SPEED = 2; 
     
-    public void Init(Grid grid, Transform playerObj, Transform cameraTrans, TurnHandler turnHandler,Tilemap selectionTilemap, TileChangeHandler changeHandler)
+    public void Init(Grid grid, Transform playerObj, Transform cameraTrans, TurnHandler turnHandler,Tilemap selectionTilemap, TileChangeHandler changeHandler, Transform lifeBar)
     {
         _grid = grid;
         _playerObj = playerObj;
         _cameraTrans = cameraTrans;
         _turnHandler = turnHandler;
+        _lifeBar = lifeBar;
         _selectionTilemap = selectionTilemap;
         camOffset = _cameraTrans.position - _playerObj.position;
+        lifeOffset = _lifeBar.position - _playerObj.position;
         _selectableTiles = new BaseTile[]{};
         _changeHandler = changeHandler;
+        
     }
     
     //set ref to tile we are mousing over
@@ -88,6 +93,7 @@ public class PlayerHandler : MonoBehaviour
                     //tilePos.y = 3.881368f;
                     //Debug.Log("Camera POS: " + tilePos);
                     _cameraTrans.position = tilePos + camOffset;
+                    _lifeBar.position = tilePos + lifeOffset;
                     _turnHandler.DoTurn();
                     UpdateWalkableSelectionArea();
                 }
