@@ -4,6 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class LavaHot: BaseTile {
+    private ParticleSystem _particles;
     private string[] effectingTypes = {
         "grass",
         "water",
@@ -11,8 +12,15 @@ public class LavaHot: BaseTile {
         "desert",
         "locust-swarm"
     };
+    public override void Init(TileChangeHandler changer, TurnHandler turner, PlayerHandler player) {
+        base.Init(changer, turner, player);
+        _particles = transform.GetComponentInChildren<ParticleSystem>();        
+    }
+    
+    
     public override void Activate() {
 
+        _particles.Play();
         _turnHandler.AddEvent(3, cellPosition, "lava-cold",true);
         BaseTile randTile = _changeHandler.GetRandomNeighbourTileOfTypes(this, effectingTypes);
         
