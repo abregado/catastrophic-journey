@@ -9,6 +9,7 @@ public class BaseTile: MonoBehaviour {
     public bool isWalkable;
     public int generatedWeight = 0;
     public int disasterWeight = 0;
+    public int moveCost = 1;
     
     public Vector3Int cellPosition;
     
