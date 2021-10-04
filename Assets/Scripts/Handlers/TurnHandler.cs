@@ -35,7 +35,9 @@ public class TurnHandler: MonoBehaviour {
             var keys = _queuedSounds.Keys;
             var list = _queuedSounds.ToArray();
             if (list.Length > 0) {
-                list[0].Value.PlaySound(list[0].Key);
+                if (_queuedSounds[list[0].Key] != null) {
+                    list[0].Value.PlaySound(list[0].Key);
+                }
                 _queuedSounds.Remove(list[0].Key);
             }
         }
@@ -68,12 +70,28 @@ public class TurnHandler: MonoBehaviour {
     private void GenerateNewDisasters() {
         BaseTile playerTile = _player.GetPlayerTile();
         int xAbs = playerTile.cellPosition.x;
-        if (_turnCount % 3 == 0) {
-            int spawnX = Math.Max(xAbs,_turnCount*-2) - Random.Range(6, 15);
-            Vector3Int disasterCell = _changeHandler.GetRandomStripPos(spawnX);
+        
+        //spawn a chasm behind the player every turn
+        int spawnX = xAbs + Random.Range(2, 6);
+        Vector3Int disasterCell = _changeHandler.GetRandomStripPos(spawnX);
+        AddEvent(3,disasterCell,"quake",true);
+        
+        //spawn in front of the player every second turn.
+        if (_turnCount % 2 == 0) {
+            spawnX = Math.Max(xAbs,_turnCount*-2) - Random.Range(6, 15);
+            disasterCell = _changeHandler.GetRandomStripPos(spawnX);
             string randomDisaster = _changeHandler.GetRandomDisaster();
             AddEvent(3,disasterCell,randomDisaster,true);
         }
+        
+        //spawn disasters progressivly along the map
+        if (_turnCount % 2 == 1) {
+            spawnX =  Random.Range(xAbs, (_turnCount*-2 + 5));
+            disasterCell = _changeHandler.GetRandomStripPos(spawnX);
+            string randomDisaster = _changeHandler.GetRandomDisaster();
+            AddEvent(3,disasterCell,randomDisaster,true);
+        }
+        
     }
 
     public void AddEvent(int wait, Vector3Int cell,string newTileIndex,bool overrideEvent = false) {

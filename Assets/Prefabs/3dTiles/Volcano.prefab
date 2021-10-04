@@ -5111,7 +5111,7 @@ MonoBehaviour:
   indexName: volcano
   isWalkable: 0
   generatedWeight: 0
-  disasterWeight: 1
+  disasterWeight: 5
   moveCost: 1
   audioSource: {fileID: 0}
   cellPosition: {x: 0, y: 0, z: 0}

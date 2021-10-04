@@ -9909,7 +9909,7 @@ MonoBehaviour:
   indexName: meteor
   isWalkable: 1
   generatedWeight: 0
-  disasterWeight: 3
+  disasterWeight: 1
   moveCost: 1
   audioSource: {fileID: 0}
   cellPosition: {x: 0, y: 0, z: 0}

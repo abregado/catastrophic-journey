@@ -237,6 +237,7 @@ public class TileChangeHandler : MonoBehaviour {
                 return null;
             }
             _tiles.Remove(oldTile);
+            oldTile.StopSound();
             //Debug.Log("destroying old tile");
             Destroy(oldTile.gameObject);    
         }
@@ -423,7 +424,22 @@ public class TileChangeHandler : MonoBehaviour {
         int spawnX = centerX + Random.Range(-2, 2);
         int spawnY = Random.Range(bounds.yMin, bounds.yMax);
 
-        return new Vector3Int(spawnX, spawnY, 0);
+        List<BaseTile> stripTiles = new List<BaseTile>();
+        for (int x = centerX - 2; x < centerX + 2; x++) {
+            for (int y = bounds.yMin; y < bounds.yMax; y++) {
+                BaseTile tile = GetTileAtCellByList(new Vector3Int(x, y, 0));
+                if (tile != null) {
+                    stripTiles.Add(tile);
+                }
+            }
+        }
+
+        if (stripTiles.Count == 0) {
+            return new Vector3Int(-1000, 0, 0);
+        }
+        BaseTile randomTile = stripTiles[Random.Range(0, stripTiles.Count)];
+
+        return randomTile.cellPosition;
     }
 
     public string GetRandomDisaster() {

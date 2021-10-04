@@ -51,7 +51,7 @@ MonoBehaviour:
   indexName: locust-swarm
   isWalkable: 0
   generatedWeight: 0
-  disasterWeight: 1
+  disasterWeight: 3
   moveCost: 1
   audioSource: {fileID: 0}
   cellPosition: {x: 0, y: 0, z: 0}
