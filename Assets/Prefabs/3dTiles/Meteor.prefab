@@ -9908,7 +9908,8 @@ MonoBehaviour:
   indexName: meteor
   isWalkable: 1
   generatedWeight: 0
-  disasterWeight: 4
+  disasterWeight: 3
+  moveCost: 1
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &5960704005488657419
 GameObject:

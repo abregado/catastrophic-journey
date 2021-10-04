@@ -10,7 +10,7 @@ public class BaseTile: MonoBehaviour {
     public int generatedWeight = 0;
     public int disasterWeight = 0;
     public int moveCost = 1;
-    
+
     public Vector3Int cellPosition;
     
     public virtual void Init(TileChangeHandler changer, TurnHandler turner, PlayerHandler player) {
@@ -22,7 +22,7 @@ public class BaseTile: MonoBehaviour {
     }
 
     public virtual void Activate() {
-        
+
     }
     
     protected void CenterTile() {

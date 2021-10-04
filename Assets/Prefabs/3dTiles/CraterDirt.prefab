@@ -171,6 +171,7 @@ MonoBehaviour:
   isWalkable: 1
   generatedWeight: 0
   disasterWeight: 0
+  moveCost: 3
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &5145017354188625173
 GameObject:
