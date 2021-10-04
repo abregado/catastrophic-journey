@@ -24,5 +24,7 @@ MonoBehaviour:
   - {fileID: 2718078374815475557, guid: b157cae160033c949bbec3052e3a8133, type: 3}
   - {fileID: 2718078374815475557, guid: c21fd317c4792534ea515ebac65a5958, type: 3}
   - {fileID: 2718078374815475557, guid: 33c95acd26060dd499191fd7836088b9, type: 3}
+  - {fileID: 2718078374815475557, guid: 0903b6a9cc814b24eb85ff7293b54fe0, type: 3}
+  - {fileID: 2718078374815475557, guid: d33e043b6e099084a842f9cea3516c7b, type: 3}
   eventMarkerPrefab: {fileID: 8118265683478646970, guid: fe5b9fdf04d7a7643a77e3bd5ba3cb5a, type: 3}
   selectionTile: {fileID: 11400000, guid: 057974438612db6419b3a71135ffc4d7, type: 2}

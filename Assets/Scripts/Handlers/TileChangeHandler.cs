@@ -176,6 +176,22 @@ public class TileChangeHandler : MonoBehaviour {
         return correctType.ToArray();
     }
 
+    public BaseTile[] GetAllNeighbourTilesExcluding(BaseTile center, string[] typeIndexes) {
+        List<string> types = new List<string>();
+        
+        foreach (GameObject prefab in resources.tilePrefabs) {
+            BaseTile tile = prefab.GetComponent<BaseTile>();
+            types.Add(tile.indexName);
+        }
+        foreach (String typestring in typeIndexes)
+        {
+            types.Remove(typestring);
+        }
+
+
+        return GetAllNeighbourTilesOfTypes(center, types.ToArray());
+    }
+
     public BaseTile[] FloodFillWalkable(BaseTile start, int steps) {
         Dictionary<Vector3Int, BaseTile> filled = new Dictionary<Vector3Int, BaseTile>();
 

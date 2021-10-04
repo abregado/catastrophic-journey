@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indexName: water
-  isDisaster: 0
   isWalkable: 0
   generatedWeight: 2
+  disasterWeight: 0
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &2841402919739901046
 MeshCollider:
@@ -115,6 +115,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 847564cbb92d2e2468b0a9cb0a953d6d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 364a3dcb3ce87b74ea678697d68f20f9, type: 2}
     - target: {fileID: 919132149155446097, guid: 847564cbb92d2e2468b0a9cb0a953d6d, type: 3}
       propertyPath: m_Name
       value: water
