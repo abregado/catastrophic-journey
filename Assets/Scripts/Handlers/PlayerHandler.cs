@@ -85,7 +85,8 @@ public class PlayerHandler : MonoBehaviour
         {
             _rocket = FindObjectOfType<Rocket>();
             _rocket.LaunchRocket();
-            _playerObj.gameObject.SetActive(false);
+            //_playerObj.gameObject.SetActive(false);
+            _playerObj.gameObject.transform.Find("astronautA").gameObject.SetActive(false);
         }
         
         
@@ -97,6 +98,17 @@ public class PlayerHandler : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && _selectableTiles.Length == 0) {
             _changeHandler.RestartGame();
             return;
+        }
+
+        if (_changeHandler.GetTileAtPositionByList(_playerObj.position).indexName == "water")
+        {
+            _playerObj.transform.Find("astronautA").gameObject.SetActive(false);
+            _playerObj.transform.Find("ship_light").gameObject.SetActive(true);
+        }
+        else
+        {
+            _playerObj.transform.Find("astronautA").gameObject.SetActive(true);
+            _playerObj.transform.Find("ship_light").gameObject.SetActive(false);
         }
         
         if (mousedOverTile != null) {
