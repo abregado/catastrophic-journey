@@ -78,7 +78,7 @@ public class TurnHandler: MonoBehaviour {
 
     public void AddEvent(int wait, Vector3Int cell,string newTileIndex,bool overrideEvent = false) {
         if (overrideEvent == false && TileAlreadyHasSoonerEvent(cell, wait + _turnCount)) {
-            Debug.Log("already has earlier event for change: " + newTileIndex);
+            //Debug.Log("already has earlier event for change: " + newTileIndex);
             return;
         }
         _turnEvents.Add(new TurnEvent(_turnCount + wait,cell,newTileIndex));
