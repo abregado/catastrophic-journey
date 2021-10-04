@@ -210,9 +210,14 @@ public class TileChangeHandler : MonoBehaviour {
         BaseTile[] neighbours = GetNeighbourTiles(start);
         foreach (BaseTile ntile in neighbours) {
             if (ntile.isWalkable && stepsRemaining - ntile.moveCost > 0) {
-                if (dictionary.ContainsKey(ntile.cellPosition) == false) {
-                    dictionary.Add(ntile.cellPosition, stepsRemaining - ntile.moveCost);
-                    if (stepsRemaining > -1) {
+                if (stepsRemaining > 0) {
+                    if (dictionary.ContainsKey(ntile.cellPosition) == false) {
+                        dictionary.Add(ntile.cellPosition, stepsRemaining - ntile.moveCost);
+                        dictionary = WalkableStep(dictionary, ntile, stepsRemaining - ntile.moveCost);
+
+                    }
+                    else if (dictionary[ntile.cellPosition] < stepsRemaining - ntile.moveCost) {
+                        dictionary[ntile.cellPosition] = stepsRemaining - ntile.moveCost;
                         dictionary = WalkableStep(dictionary, ntile, stepsRemaining - ntile.moveCost);
                     }
                 }
