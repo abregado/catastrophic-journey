@@ -328,7 +328,10 @@ public class TileChangeHandler : MonoBehaviour {
         //Forest spreading
 
         GrowForests(forestTiles.ToArray());
-        
+        //test rocket
+
+        ChangeTileAtCell(new Vector3Int(-238,3,0), "rocket",true);
+
         ActivateAllTiles();
     }
 

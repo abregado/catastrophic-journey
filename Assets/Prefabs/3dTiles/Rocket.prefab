@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5257072711960731727}
-  - component: {fileID: -773250253113938901}
+  - component: {fileID: -7223899811224420229}
   - component: {fileID: 8326688456267894745}
   m_Layer: 6
   m_Name: Rocket
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-773250253113938901
+--- !u!114 &-7223899811224420229
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,13 +43,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2718078374815475557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fee97e9a66d44559148976c04151563, type: 3}
+  m_Script: {fileID: 11500000, guid: 47ad90278464dfc429cd23ccd51c46e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indexName: grass
+  indexName: rocket
   isWalkable: 1
-  generatedWeight: 50
+  generatedWeight: 0
   disasterWeight: 0
+  moveCost: 1
   cellPosition: {x: 0, y: 0, z: 0}
 --- !u!64 &8326688456267894745
 MeshCollider:
@@ -177,7 +178,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   loopType: 0
   loops: 1
-  id: 
+  id: launch
   isRelative: 0
   isFrom: 0
   isIndependentUpdate: 0
@@ -189,7 +190,7 @@ MonoBehaviour:
   animationType: 2
   targetType: 11
   forcedTargetType: 0
-  autoPlay: 1
+  autoPlay: 0
   useTargetAsV3: 0
   endValueFloat: 0
   endValueV3: {x: 0, y: 50, z: 0}
