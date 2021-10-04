@@ -10,7 +10,8 @@ public class LavaHot: BaseTile {
         "water",
         "forest",
         "desert",
-        "locust-swarm"
+        "locust-swarm",
+        "crater-dirt"
     };
     public override void Init(TileChangeHandler changer, TurnHandler turner, PlayerHandler player) {
         base.Init(changer, turner, player);      
