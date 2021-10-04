@@ -45,6 +45,11 @@ public class TurnHandler: MonoBehaviour {
 
     public void DoTurn() {
         _turnCount++;
+
+        if (_turnCount % 15 == 0) {
+            _player.Damage();
+        }
+        
         ProcessEventStack();
 
         GenerateNewDisasters();

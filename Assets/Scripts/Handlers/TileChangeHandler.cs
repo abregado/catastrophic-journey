@@ -44,19 +44,17 @@ public class TileChangeHandler : MonoBehaviour {
         
         _turnHandler.Init(this, _playerHandler);
         _playerHandler.Init(_grid, _playerObj, _cameraTrans, _turnHandler, _selectionTilemap, this, _lifeBar); //pass ref to grid to playerhandler
-
-        GenerateLevel();
         
         StartGame();
     }
 
     public void StartGame() {
+        GenerateLevel();
         _turnHandler.StartGame();
         _playerHandler.StartGame();
     }
 
     public void RestartGame() {
-        GenerateLevel();
         StartGame();
     }
 

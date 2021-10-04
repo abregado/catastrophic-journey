@@ -46,6 +46,7 @@ public class PlayerHandler : MonoBehaviour
     }
 
     public void StartGame() {
+        MovePlayer(new Vector3(5,0,2));
         UpdateWalkableSelectionArea();
         _health = 5;
         UpdateLifeBar();
@@ -140,6 +141,13 @@ public class PlayerHandler : MonoBehaviour
             _playerObj.gameObject.transform.Find("astronautA").gameObject.SetActive(false);
         }
     }
+
+    private void MovePlayer(Vector3 dest) {
+        _playerObj.position = dest;
+        _cameraTrans.position = dest + camOffset;
+        _lifeBar.position = dest + lifeOffset;
+        DoPlayerTileChecks();
+    }
     
     // Update is called once per frame
     void Update()
@@ -175,14 +183,7 @@ public class PlayerHandler : MonoBehaviour
                 gridPos = _grid.GetComponent<TileChangeHandler>().GetTileGridCoordinate(tilePos);
                 //Debug.Log("Grid Position: " + gridPos);
                 if (Input.GetMouseButtonDown(0)) {
-                    _playerObj.position = tilePos;
-                    //Debug.Log(mousedOverTile.GetComponent<BaseTile>().indexName);
-                    //tilePos.x = tilePos.x - 0.62303f;
-                    //tilePos.z = tilePos.z + 2.224154f;
-                    //tilePos.y = 3.881368f;
-                    //Debug.Log("Camera POS: " + tilePos);
-                    _cameraTrans.position = tilePos + camOffset;
-                    _lifeBar.position = tilePos + lifeOffset;
+                    MovePlayer(tilePos);
                     _turnHandler.DoTurn();
                     UpdateWalkableSelectionArea();
                 }
