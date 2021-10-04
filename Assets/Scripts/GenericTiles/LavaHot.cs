@@ -13,15 +13,12 @@ public class LavaHot: BaseTile {
         "locust-swarm"
     };
     public override void Init(TileChangeHandler changer, TurnHandler turner, PlayerHandler player) {
-        base.Init(changer, turner, player);
-        _particles = transform.GetComponentInChildren<ParticleSystem>();        
+        base.Init(changer, turner, player);      
     }
-    
-    
+
     public override void Activate() {
         base.Activate();
 
-        _particles.Play();
         _turnHandler.AddEvent(3, cellPosition, "lava-cold",true);
         BaseTile randTile = _changeHandler.GetRandomNeighbourTileOfTypes(this, effectingTypes);
         
