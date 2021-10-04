@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -50,6 +51,11 @@ public class PlayerHandler : MonoBehaviour
         //test section tilemap
         BaseTile playerTile = GetPlayerTile();
         _selectableTiles = _changeHandler.FloodFillWalkable(playerTile, PLAYER_SPEED-1);
+
+        List<BaseTile> listTiles = _selectableTiles.ToList();
+        listTiles.Remove(_changeHandler.GetTileAtPositionByList(_playerObj.transform.position));
+        _selectableTiles = listTiles.ToArray();
+        
         _selectionTilemap.ClearAllTiles();
         foreach (BaseTile tile in _selectableTiles) {
             _selectionTilemap.SetTile(tile.cellPosition,_changeHandler.resources.selectionTile);
@@ -76,6 +82,11 @@ public class PlayerHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R)) {
             _changeHandler.RestartGame();
             _playerObj.position = Vector3.zero;
+        }
+        
+        if (Input.GetMouseButtonDown(0) && _selectableTiles.Length == 0) {
+            _changeHandler.RestartGame();
+            return;
         }
         
         if (mousedOverTile != null) {

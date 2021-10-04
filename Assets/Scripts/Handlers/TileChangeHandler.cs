@@ -194,6 +194,7 @@ public class TileChangeHandler : MonoBehaviour {
 
     public BaseTile[] FloodFillWalkable(BaseTile start, int steps) {
         Dictionary<Vector3Int, int> filled = new Dictionary<Vector3Int, int>();
+        filled.Add(start.cellPosition,steps);
 
         filled = WalkableStep(filled, start, steps);
 
